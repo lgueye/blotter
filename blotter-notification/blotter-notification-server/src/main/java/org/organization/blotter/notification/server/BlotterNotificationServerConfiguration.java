@@ -4,8 +4,18 @@ package org.organization.blotter.notification.server;
  * @author louis.gueye@gmail.com
  */
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
 
 @Configuration
 public class BlotterNotificationServerConfiguration {
+
+	@Bean
+	public EmbeddedKafkaBroker embeddedKafkaBroker(@Value("${blotter.notification.server.port}") final int port) {
+		final EmbeddedKafkaBroker kafkaBroker = new EmbeddedKafkaBroker(1, true);
+		kafkaBroker.kafkaPorts(port);
+		return kafkaBroker;
+	}
 }
