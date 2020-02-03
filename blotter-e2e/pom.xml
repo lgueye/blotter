@@ -8,15 +8,34 @@
     </parent>
     <artifactId>blotter-e2e</artifactId>
     <properties>
-        <blotter.api.server.port>9030</blotter.api.server.port>
-        <blotter.api.server.url>http://localhost:${blotter.api.server.port}</blotter.api.server.url>
-        <blotter.broker.server.port>9010</blotter.broker.server.port>
-        <blotter.broker.server.url>broker:(${spring.activemq.broker-url})?useJmx=true&amp;persistent=false</blotter.broker.server.url>
-        <blotter.notification.server.port>9020</blotter.notification.server.port>
-        <blotter.notification.server.url>localhost:${blotter.api.server.port}</blotter.notification.server.url>
+        <blotter.api.debug.port>9302</blotter.api.debug.port>
+        <blotter.api.server.http.health.url>http://localhost:${blotter.api.server.http.port}/actuator/health</blotter.api.server.http.health.url>
+        <blotter.api.server.http.port>9300</blotter.api.server.http.port>
+        <blotter.api.server.url>http://localhost:${blotter.api.server.http.port}</blotter.api.server.url>
+        <blotter.broker.server.debug.port>9102</blotter.broker.server.debug.port>
+        <blotter.broker.server.http.health.url>http://localhost:${blotter.broker.server.http.port}/actuator/health</blotter.broker.server.http.health.url>
+        <blotter.broker.server.http.port>9101</blotter.broker.server.http.port>
+        <blotter.broker.server.port>9100</blotter.broker.server.port>
+        <blotter.broker.server.url>tcp://localhost:${blotter.broker.server.port}</blotter.broker.server.url>
+        <blotter.notification.server.debug.port>9202</blotter.notification.server.debug.port>
+        <blotter.notification.server.http.health.url>http://localhost:${blotter.notification.server.http.port}/actuator/health</blotter.notification.server.http.health.url>
+        <blotter.notification.server.http.port>9201</blotter.notification.server.http.port>
+        <blotter.notification.server.port>9200</blotter.notification.server.port>
+        <blotter.notification.server.url>localhost:${blotter.notification.server.port}</blotter.notification.server.url>
+        <blotter.store.server.base-dir>/tmp</blotter.store.server.base-dir>
+        <blotter.store.server.debug.port>9002</blotter.store.server.debug.port>
+        <blotter.store.server.http.health.url>http://localhost:${blotter.store.server.http.port}/actuator/health</blotter.store.server.http.health.url>
+        <blotter.store.server.http.port>9001</blotter.store.server.http.port>
         <blotter.store.server.port>9000</blotter.store.server.port>
-        <blotter.store.server.url>localhost:${blotter.api.server.port}</blotter.store.server.url>
-        <spring.activemq.broker-url>tcp://localhost:${blotter.broker.server.port}</spring.activemq.broker-url>
+        <blotter.store.server.url>jdbc:h2:tcp://localhost:${blotter.store.server.port}/${blotter.store.server.base-dir}/blotter-db</blotter.store.server.url>
+        <logging.level>INFO</logging.level>
+        <spring.datasource.driverClassName>org.h2.Driver</spring.datasource.driverClassName>
+        <spring.datasource.hikari.maximum-pool-size>5</spring.datasource.hikari.maximum-pool-size>
+        <spring.datasource.username>sa</spring.datasource.username>
+        <spring.datasource.validationQuery>SELECT 1</spring.datasource.validationQuery>
+        <spring.jpa.hibernate.ddl-auto>validate</spring.jpa.hibernate.ddl-auto>
+        <spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.H2Dialect</spring.jpa.properties.hibernate.dialect>
+        <spring.jpa.show-sql>false</spring.jpa.show-sql>
     </properties>
     <dependencies>
         <dependency>
@@ -83,6 +102,122 @@
                         <version>${project.parent.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>set-system-properties</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>set-system-properties</goal>
+                        </goals>
+                        <configuration>
+                            <properties>
+                                <property>
+                                    <name>blotter.api.server.url</name>
+                                    <value>${blotter.api.server.url}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.broker.server.url</name>
+                                    <value>${blotter.broker.server.url}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.notification.server.url</name>
+                                    <value>${blotter.notification.server.url}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.store.server.url</name>
+                                    <value>${blotter.store.server.url}</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.bazaarvoice.maven.plugins</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-blotter-store-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>blotter-store-server</name>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <healthcheckUrl>${blotter.store.server.http.health.url}</healthcheckUrl>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-Xdebug</argument>
+                                <argument>-Xrunjdwp:server=y,transport=dt_socket,address=${blotter.store.server.debug.port},suspend=n</argument>
+                                <argument>-jar</argument>
+                                <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-store-server/${project.parent.version}/blotter-store-server-${project.parent.version}.jar</argument>
+                                <argument>--server.port=${blotter.store.server.http.port}</argument>
+                                <argument>--blotter.store.server.port=${blotter.store.server.port}</argument>
+                                <argument>--blotter.store.server.base-dir=${blotter.store.server.base-dir}</argument>
+                                <!--<argument>&#45;&#45;spring.datasource.driverClassName=${spring.datasource.driverClassName}</argument>-->
+                                <!--<argument>&#45;&#45;spring.datasource.hikari.maximum-pool-size=${spring.datasource.hikari.maximum-pool-size}</argument>-->
+                                <!--<argument>&#45;&#45;spring.datasource.username=${spring.datasource.username}</argument>-->
+                                <!--<argument>&#45;&#45;spring.datasource.validationQuery=${spring.datasource.validationQuery}</argument>-->
+                                <!--<argument>&#45;&#45;spring.jpa.hibernate.ddl-auto=${spring.jpa.hibernate.ddl-auto}</argument>-->
+                                <!--<argument>&#45;&#45;spring.jpa.properties.hibernate.dialect=${spring.jpa.properties.hibernate.dialect}</argument>-->
+                                <!--<argument>&#45;&#45;spring.jpa.show-sql>${spring.jpa.show-sql}</argument>-->
+                                <argument>--logging.level.org.organization=${logging.level}</argument>
+                                <argument>--logging.level.org.springframework=WARN</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>run-blotter-broker-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>blotter-broker-server</name>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <healthcheckUrl>${blotter.broker.server.http.health.url}</healthcheckUrl>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-Xdebug</argument>
+                                <argument>-Xrunjdwp:server=y,transport=dt_socket,address=${blotter.broker.server.debug.port},suspend=n</argument>
+                                <argument>-jar</argument>
+                                <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-broker-server/${project.parent.version}/blotter-broker-server-${project.parent.version}.jar</argument>
+                                <argument>--server.port=${blotter.broker.server.http.port}</argument>
+                                <argument>--spring.activemq.broker-url=${blotter.broker.server.url}</argument>
+                                <argument>--logging.level.org.organization=${logging.level}</argument>
+                                <argument>--logging.level.org.springframework=WARN</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>run-blotter-notification-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>blotter-notification-server</name>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <healthcheckUrl>${blotter.notification.server.http.health.url}</healthcheckUrl>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-Xdebug</argument>
+                                <argument>-Xrunjdwp:server=y,transport=dt_socket,address=${blotter.notification.server.debug.port},suspend=n</argument>
+                                <argument>-jar</argument>
+                                <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-notification-server/${project.parent.version}/blotter-notification-server-${project.parent.version}.jar</argument>
+                                <argument>--server.port=${blotter.notification.server.http.port}</argument>
+                                <argument>--blotter.notification.server.port=${blotter.notification.server.port}</argument>
+                                <argument>--logging.level.org.organization=${logging.level}</argument>
+                                <argument>--logging.level.org.springframework=WARN</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
