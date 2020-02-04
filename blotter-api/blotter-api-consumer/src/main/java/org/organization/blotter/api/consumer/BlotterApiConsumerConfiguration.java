@@ -28,7 +28,7 @@ import java.security.cert.X509Certificate;
 @Import(BlotterSharedSerializationConfiguration.class)
 public class BlotterApiConsumerConfiguration {
 	@Bean
-	public CloseableHttpClient getCloseableHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
+	public CloseableHttpClient closeableHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		final SSLContext sslContext = SSLContext.getInstance("SSL");
 		TrustManager[] trusManagers = new TrustManager[]{new X509TrustManager() {
 			public X509Certificate[] getAcceptedIssuers() {
