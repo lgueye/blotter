@@ -9,6 +9,7 @@
     <artifactId>blotter-e2e</artifactId>
     <properties>
         <blotter.api.debug.port>9302</blotter.api.debug.port>
+        <blotter.api.server.debug.port>9302</blotter.api.server.debug.port>
         <blotter.api.server.http.health.url>http://localhost:${blotter.api.server.http.port}/actuator/health</blotter.api.server.http.health.url>
         <blotter.api.server.http.port>9300</blotter.api.server.http.port>
         <blotter.api.server.url>http://localhost:${blotter.api.server.http.port}</blotter.api.server.url>
@@ -80,6 +81,11 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>datatable</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -159,13 +165,6 @@
                                 <argument>--server.port=${blotter.store.server.http.port}</argument>
                                 <argument>--blotter.store.server.port=${blotter.store.server.port}</argument>
                                 <argument>--blotter.store.server.base-dir=${blotter.store.server.base-dir}</argument>
-                                <!--<argument>&#45;&#45;spring.datasource.driverClassName=${spring.datasource.driverClassName}</argument>-->
-                                <!--<argument>&#45;&#45;spring.datasource.hikari.maximum-pool-size=${spring.datasource.hikari.maximum-pool-size}</argument>-->
-                                <!--<argument>&#45;&#45;spring.datasource.username=${spring.datasource.username}</argument>-->
-                                <!--<argument>&#45;&#45;spring.datasource.validationQuery=${spring.datasource.validationQuery}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.hibernate.ddl-auto=${spring.jpa.hibernate.ddl-auto}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.properties.hibernate.dialect=${spring.jpa.properties.hibernate.dialect}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.show-sql>${spring.jpa.show-sql}</argument>-->
                                 <argument>--logging.level.org.organization=${logging.level}</argument>
                                 <argument>--logging.level.org.springframework=WARN</argument>
                             </arguments>
@@ -217,6 +216,37 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>run-blotter-api-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>blotter-api-server</name>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <healthcheckUrl>${blotter.api.server.http.health.url}</healthcheckUrl>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-Xdebug</argument>
+                                <argument>-Xrunjdwp:server=y,transport=dt_socket,address=${blotter.api.server.debug.port},suspend=n</argument>
+                                <argument>-jar</argument>
+                                <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-api-server/${project.parent.version}/blotter-api-server-${project.parent.version}.jar</argument>
+                                <argument>--server.port=${blotter.api.server.http.port}</argument>
+                                <argument>--logging.level.org.organization=${logging.level}</argument>
+                                <argument>--logging.level.org.springframework=WARN</argument>
+                                <argument>--spring.datasource.driverClassName=${spring.datasource.driverClassName}</argument>
+                                <argument>--spring.datasource.hikari.maximum-pool-size=${spring.datasource.hikari.maximum-pool-size}</argument>
+                                <argument>--spring.datasource.username=${spring.datasource.username}</argument>
+                                <argument>--spring.datasource.validationQuery=${spring.datasource.validationQuery}</argument>
+                                <argument>--spring.datasource.url=${blotter.store.server.url}</argument>
+                                <argument>--spring.jpa.hibernate.ddl-auto=${spring.jpa.hibernate.ddl-auto}</argument>
+                                <argument>--spring.jpa.properties.hibernate.dialect=${spring.jpa.properties.hibernate.dialect}</argument>
+                                <argument>--spring.jpa.show-sql=${spring.jpa.show-sql}</argument>
+                                <argument>--spring.jpa.open-in-view=false</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -231,6 +261,8 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <forkCount>0</forkCount>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                     <includes>
                         <include>**/BlotterE2E.java</include>
                     </includes>

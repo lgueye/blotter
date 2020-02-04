@@ -80,6 +80,7 @@
         <spring.version>5.2.3.RELEASE</spring.version>
         <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
+        <cucumber-datatable.version>3.2.1</cucumber-datatable.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -343,6 +344,11 @@
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>${cucumber.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>datatable</artifactId>
+                <version>${cucumber-datatable.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

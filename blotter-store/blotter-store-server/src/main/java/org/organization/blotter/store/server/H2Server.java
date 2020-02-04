@@ -21,7 +21,8 @@ public class H2Server {
 
 	@PostConstruct
 	public void postConstruct() throws SQLException {
-		server = Server.createTcpServer("-tcp", "-tcpDaemon", "-tcpPort", String.valueOf(port), "-baseDir", baseDir, "-web", "-webDaemon");
+		server = Server.createTcpServer("-tcp", "-tcpDaemon", "-tcpPort", String.valueOf(port), "-baseDir", baseDir, "-ifNotExists", "-web",
+				"-webDaemon");
 		server.start();
 		log.info("Started blotter store server (H2 tcp server)");
 		log.info("Listening on {}", port);
