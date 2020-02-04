@@ -8,6 +8,6 @@ import org.junit.runner.RunWith;
  * @author louis.gueye@gmail.com
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(features = {"classpath:features/"}, plugin = {"pretty"}, glue = {"org.organization.blotter.broker.e2e.BlotterE2EConfiguration"})
+@CucumberOptions(strict = true, features = {"classpath:features/"}, plugin = {"pretty"})
 public class BlotterE2E {
 }
