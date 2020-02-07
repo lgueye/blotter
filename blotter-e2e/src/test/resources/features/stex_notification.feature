@@ -4,7 +4,7 @@ Feature: stex search
 
     Given choisel subscribes to orders notifications
 
-    When blotter system receives the messages below
+    When blotter system receives the messages below from AVQ
       | externalIdentifier                     | metaType | author | portfolio    | amount | instrument | intent |
       | stex-ingestion-external-identifier-100 | stex     | peva   | PF-000000001 | 100000 | LU15000000 | buy    |
       | stex-ingestion-external-identifier-200 | stex     | peva   | PF-000000001 | 800000 | LU16000000 | sell   |

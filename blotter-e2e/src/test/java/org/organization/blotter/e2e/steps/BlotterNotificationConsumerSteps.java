@@ -3,9 +3,10 @@ package org.organization.blotter.e2e.steps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
+import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
+import org.organizarion.blotter.notification.model.OrderNotificationDto;
 import org.organization.blotter.notification.consumer.BlotterNotificationConsumer;
-import org.organization.blotter.notification.consumer.OrderNotificationDto;
 
 import java.time.Duration;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author louis.gueye@gmail.com
  */
+@Slf4j
 public class BlotterNotificationConsumerSteps implements En {
 
 	public BlotterNotificationConsumerSteps(final BlotterNotificationConsumer blotterNotificationConsumer, final ObjectMapper objectMapper) {
@@ -24,12 +26,15 @@ public class BlotterNotificationConsumerSteps implements En {
 		Given("{} subscribes to orders notifications", blotterNotificationConsumer::subscribe);
 
 		Then("within {}, {} should be notified of the below orders notifications",
-				(final String durationAsString, final String user, DataTable dataTable) -> {
+				(final String durationAsString, final String user, final DataTable dataTable) -> {
 					final Duration timeout = Duration.parse(durationAsString);
+					final List<OrderNotificationDto> expected = dataTable.asList(OrderNotificationDto.class);
 					Awaitility.await().atMost(timeout.toMillis(), TimeUnit.MILLISECONDS).pollDelay(50, TimeUnit.MILLISECONDS)
-							.pollInterval(50, TimeUnit.MILLISECONDS).until(() -> {
+							.pollInterval(100, TimeUnit.MILLISECONDS).until(() -> {
 								final List<OrderNotificationDto> actual = blotterNotificationConsumer.getNotifications(user);
-								return dataTable.asList(OrderNotificationDto.class).equals(actual);
+//								log.info("actual => {}", actual);
+//								log.info("expected => {}", expected);
+								return expected.equals(actual);
 							});
 				});
 
