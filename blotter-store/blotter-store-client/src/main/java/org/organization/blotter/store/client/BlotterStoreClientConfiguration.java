@@ -1,5 +1,6 @@
 package org.organization.blotter.store.client;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -7,4 +8,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BlotterStoreClientConfiguration {
+	@Bean
+	public BlotterStoreClient blotterStoreClient() {
+		return new BlotterStoreClient();
+	}
 }
