@@ -30,7 +30,7 @@ public class BlotterApiConsumerConfiguration {
 	@Bean
 	public CloseableHttpClient closeableHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		final SSLContext sslContext = SSLContext.getInstance("SSL");
-		TrustManager[] trusManagers = new TrustManager[]{new X509TrustManager() {
+		TrustManager[] trustManagers = new TrustManager[]{new X509TrustManager() {
 			public X509Certificate[] getAcceptedIssuers() {
 				return null;
 			}
@@ -42,7 +42,7 @@ public class BlotterApiConsumerConfiguration {
 			}
 
 		}};
-		sslContext.init(null, trusManagers, new SecureRandom());
+		sslContext.init(null, trustManagers, new SecureRandom());
 		return HttpClientBuilder.create().setSSLHostnameVerifier(new NoopHostnameVerifier()).setSslcontext(sslContext).build();
 	}
 
