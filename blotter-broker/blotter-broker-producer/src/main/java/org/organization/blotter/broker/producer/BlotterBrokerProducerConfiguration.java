@@ -21,7 +21,7 @@ import javax.jms.ConnectionFactory;
 @Configuration
 public class BlotterBrokerProducerConfiguration {
 
-	static final String BROKER_URL_KEY = "blotter.broker.server.url";
+	private static final String BROKER_URL_KEY = "blotter.broker.server.url";
 
 	@Bean
 	public ConnectionFactory connectionFactory(@Value("${" + BROKER_URL_KEY + "}") String brokerUrl) {

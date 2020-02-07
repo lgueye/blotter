@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
-public class StexOrderDto {
+class StexOrderDto {
 	private String id;
 	private String externalIdentifier;
 	private MetaType metaType = MetaType.stex;

@@ -1,8 +1,5 @@
 package org.organization.blotter.notification.producer;
 
-/**
- * @author louis.gueye@gmail.com
- */
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -18,6 +15,9 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author louis.gueye@gmail.com
+ */
 @Configuration
 public class BlotterNotificationProducerConfiguration {
 
