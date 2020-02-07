@@ -1,4 +1,4 @@
-package org.organization.blotter.api.consumer;
+package org.organization.blotter.api.model;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;
@@ -13,8 +13,9 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
-public class SearchOrderCriteria {
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent"})
+public class NormalizedOrderDto {
+	private String id;
 	private String externalIdentifier;
 	private MetaType metaType;
 	private String author;

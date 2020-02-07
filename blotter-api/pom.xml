@@ -11,6 +11,7 @@
     <modules>
         <module>blotter-api-consumer</module>
         <module>blotter-api-server</module>
+        <module>blotter-api-model</module>
     </modules>
     <dependencies>
         <dependency>

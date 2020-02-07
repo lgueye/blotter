@@ -20,5 +20,9 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.organization.blotter</groupId>
+            <artifactId>blotter-api-model</artifactId>
+        </dependency>
     </dependencies>
 </project>
