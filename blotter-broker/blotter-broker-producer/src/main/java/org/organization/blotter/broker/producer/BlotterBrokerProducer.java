@@ -11,7 +11,7 @@ public class BlotterBrokerProducer {
 
 	private final JmsTemplate jmsTemplate;
 
-	public void send(final RawStexDto message) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public void send(final String destination, final RawStexDto message) {
+		jmsTemplate.convertAndSend(destination, message);
 	}
 }

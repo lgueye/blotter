@@ -17,8 +17,8 @@ import javax.jms.ConnectionFactory;
 /**
  * @author louis.gueye@gmail.com
  */
-@Configuration
 @Import({BlotterSharedSerializationConfiguration.class})
+@Configuration
 public class BlotterBrokerProducerConfiguration {
 
 	static final String BROKER_URL_KEY = "blotter.broker.server.url";
