@@ -1,4 +1,4 @@
-package org.organization.blotter.notification.consumer;
+package org.organization.blotter.api.server.specific.stex;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;
@@ -14,10 +14,10 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
-public class OrderNotificationDto {
+public class StexOrderDto {
 	private String id;
 	private String externalIdentifier;
-	private MetaType metaType;
+	private MetaType metaType = MetaType.stex;
 	private String author;
 	private String portfolio;
 	private Float amount;
