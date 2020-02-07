@@ -12,6 +12,7 @@
         <module>blotter-notification-consumer</module>
         <module>blotter-notification-producer</module>
         <module>blotter-notification-server</module>
+        <module>blotter-notification-model</module>
     </modules>
     <dependencies>
         <dependency>
