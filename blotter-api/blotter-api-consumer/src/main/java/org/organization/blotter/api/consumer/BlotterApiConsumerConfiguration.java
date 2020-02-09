@@ -60,7 +60,19 @@ public class BlotterApiConsumerConfiguration {
 	}
 
 	@Bean
-	public BlotterApiConsumer blotterApiConsumer(@Value("${blotter.api.server.url}") final String apiUrl, final RestTemplate restTemplate) {
-		return new BlotterApiConsumer(restTemplate, apiUrl);
+	public SearchOrderCriteriaToMultiValueMapConverter searchOrderCriteriaToMultiValueMapConverter() {
+		return new SearchOrderCriteriaToMultiValueMapConverter();
+	}
+
+	@Bean
+	public SearchOrderCriteriaToMapConverter searchOrderCriteriaToMapConverter() {
+		return new SearchOrderCriteriaToMapConverter();
+	}
+
+	@Bean
+	public BlotterApiConsumer blotterApiConsumer(@Value("${blotter.api.server.url}") final String apiUrl, final RestTemplate restTemplate,
+			final SearchOrderCriteriaToMultiValueMapConverter searchOrderCriteriaToMultiValueMapConverter,
+			final SearchOrderCriteriaToMapConverter searchOrderCriteriaToMapConverter) {
+		return new BlotterApiConsumer(restTemplate, apiUrl, searchOrderCriteriaToMultiValueMapConverter, searchOrderCriteriaToMapConverter);
 	}
 }
