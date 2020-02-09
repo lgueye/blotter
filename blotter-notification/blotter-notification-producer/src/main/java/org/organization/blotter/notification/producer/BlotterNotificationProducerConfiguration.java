@@ -1,8 +1,8 @@
 package org.organization.blotter.notification.producer;
 
-
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.organizarion.blotter.notification.model.NotificationTopic;
 import org.organizarion.blotter.notification.model.OrderNotificationDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +40,6 @@ public class BlotterNotificationProducerConfiguration {
 
 	@Bean
 	public BlotterNotificationProducer blotterNotificationProducer(final KafkaTemplate<String, OrderNotificationDto> kafkaTemplate) {
-		return new BlotterNotificationProducer("orders-notifications", kafkaTemplate);
+		return new BlotterNotificationProducer(NotificationTopic.ORDER_STATUS, kafkaTemplate);
 	}
 }

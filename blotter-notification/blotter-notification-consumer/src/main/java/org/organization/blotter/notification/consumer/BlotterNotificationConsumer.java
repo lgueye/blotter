@@ -3,6 +3,7 @@ package org.organization.blotter.notification.consumer;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.organizarion.blotter.notification.model.NotificationTopic;
 import org.organizarion.blotter.notification.model.OrderNotificationDto;
 import org.springframework.kafka.annotation.KafkaListener;
 
@@ -37,7 +38,7 @@ public class BlotterNotificationConsumer {
 		return Collections.emptyList();
 	}
 
-	@KafkaListener(topics = "orders-notifications", groupId = "ATH")
+	@KafkaListener(topics = NotificationTopic.ORDER_STATUS, groupId = "ATH")
 	public void onMessage(OrderNotificationDto message) {
 		final boolean added = notifications.add(message);
 		if (added)
