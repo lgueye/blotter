@@ -1,11 +1,9 @@
-package org.organization.blotter.api.server;
+package org.organization.blotter.api.server.normalized;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.organizarion.blotter.notification.model.OrderNotificationDto;
 import org.organization.blotter.api.model.NormalizedOrderDto;
-import org.organization.blotter.api.server.normalized.NormalizedOrderDtoProducer;
-import org.organization.blotter.api.server.normalized.OrderNotificationDtoProducer;
 import org.organization.blotter.broker.consumer.IncomingMessageProcessor;
 import org.organization.blotter.broker.consumer.ProcessingContext;
 import org.organization.blotter.notification.producer.BlotterNotificationProducer;

@@ -1,9 +1,7 @@
 package org.organization.blotter.api.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.organization.blotter.api.server.normalized.NormalizedOrderDtoProducer;
-import org.organization.blotter.api.server.normalized.OrderNotificationDtoProducer;
-import org.organization.blotter.api.server.specific.stex.StextOrderDtoToNormalizedOrderDtoProducer;
+import org.organization.blotter.api.server.normalized.*;
 import org.organization.blotter.broker.consumer.BlotterBrokerConsumerConfiguration;
 import org.organization.blotter.notification.producer.BlotterNotificationProducer;
 import org.organization.blotter.notification.producer.BlotterNotificationProducerConfiguration;
@@ -23,8 +21,13 @@ import java.util.List;
 public class BlotterApiServerConfiguration {
 
 	@Bean
-	public StextOrderDtoToNormalizedOrderDtoProducer stextOrderDtoToNormalizedOrderDtoProducer(final ObjectMapper objectMapper) {
-		return new StextOrderDtoToNormalizedOrderDtoProducer(objectMapper);
+	public AvaloqStexOrderDtoToNormalizedOrderDtoProducer avaloqStexOrderDtoToNormalizedOrderDtoProducer(final ObjectMapper objectMapper) {
+		return new AvaloqStexOrderDtoToNormalizedOrderDtoProducer(objectMapper);
+	}
+
+	@Bean
+	public AvaloqFxOrderDtoToNormalizedOrderDtoProducer avaloqFxOrderDtoToNormalizedOrderDtoProducer(final ObjectMapper objectMapper) {
+		return new AvaloqFxOrderDtoToNormalizedOrderDtoProducer(objectMapper);
 	}
 
 	@Bean
@@ -39,8 +42,4 @@ public class BlotterApiServerConfiguration {
 		return new NormalizationProcessor(normalizedOrderProducers, persistenceService, orderNotificationProducer, orderNotificationService);
 	}
 
-	@Bean
-	public DetailsProcessor detailsProcessor() {
-		return new DetailsProcessor();
-	}
 }
