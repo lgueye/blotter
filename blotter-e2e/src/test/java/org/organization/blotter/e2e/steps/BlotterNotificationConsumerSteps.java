@@ -32,10 +32,10 @@ public class BlotterNotificationConsumerSteps implements En {
 					Awaitility.await().atMost(timeout.toMillis(), TimeUnit.MILLISECONDS).pollDelay(50, TimeUnit.MILLISECONDS)
 							.pollInterval(100, TimeUnit.MILLISECONDS).until(() -> {
 								final List<OrderNotificationDto> actual = blotterNotificationConsumer.getNotifications(user);
-//								log.info("actual => {}", actual);
-//								log.info("expected => {}", expected);
-								return expected.equals(actual);
-							});
+								// log.info("actual => {}", actual);
+								// log.info("expected => {}", expected);
+									return expected.equals(actual);
+								});
 				});
 
 	}

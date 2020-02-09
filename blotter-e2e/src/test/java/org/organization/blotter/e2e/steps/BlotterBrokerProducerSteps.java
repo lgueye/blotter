@@ -1,6 +1,5 @@
 package org.organization.blotter.e2e.steps;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
@@ -8,7 +7,7 @@ import or.organization.blotter.broker.model.avaloq.AvaloqFxOrderDto;
 import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
 import or.organization.blotter.broker.model.SourceQueues;
 import org.organization.blotter.broker.producer.BlotterBrokerProducer;
-import org.organization.blotter.broker.producer.RawStexDto;
+import org.organization.blotter.shared.model.MetaType;
 
 import java.util.List;
 import java.util.Map;
@@ -19,11 +18,23 @@ import java.util.Map;
 public class BlotterBrokerProducerSteps implements En {
 
 	public BlotterBrokerProducerSteps(final BlotterBrokerProducer blotterBrokerProducer, final ObjectMapper objectMapper) {
-		DataTableType((Map<String, String> row) -> objectMapper.convertValue(row, RawStexDto.class));
+		DataTableType((Map<String, String> row) -> objectMapper.convertValue(row, AvaloqStexOrderDto.class));
+		DataTableType((Map<String, String> row) -> objectMapper.convertValue(row, AvaloqFxOrderDto.class));
 
-		Given("blotter system receives the messages below from {}", (final String messageSource, final DataTable datatable) -> {
-			final List<RawStexDto> list = datatable.asList(RawStexDto.class);
-			list.forEach(message -> blotterBrokerProducer.send(messageSource, message));
+		Given("blotter system receives {} orders from {}", (final MetaType metaType, final String messageSource, final DataTable datatable) -> {
+			switch (messageSource) {
+				case SourceQueues.AVALOQ :
+					switch (metaType) {
+						case stex :
+							List<AvaloqStexOrderDto> avaloqStexOrderDtos = datatable.asList(AvaloqStexOrderDto.class);
+							avaloqStexOrderDtos.forEach(blotterBrokerProducer::send);
+							break;
+						case fx :
+							List<AvaloqFxOrderDto> avaloqFxOrderDtos = datatable.asList(AvaloqFxOrderDto.class);
+							avaloqFxOrderDtos.forEach(blotterBrokerProducer::send);
+							break;
+					}
+			}
 		});
 	}
 
