@@ -20,6 +20,6 @@ public class BlotterNotificationProducer {
 	public void produce(OrderNotificationDto notification) {
 		Message<OrderNotificationDto> message = MessageBuilder.withPayload(notification).setHeader(KafkaHeaders.TOPIC, destination).build();
 		kafkaTemplate.send(message);
-//		log.info("Sent data='{}' to topic='{}'", notification, destination);
+		// log.info("Sent data='{}' to topic='{}'", notification, destination);
 	}
 }

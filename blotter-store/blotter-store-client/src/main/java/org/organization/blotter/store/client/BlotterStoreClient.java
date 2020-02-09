@@ -18,8 +18,6 @@ public class BlotterStoreClient {
 	public void save(NormalizedOrderDto dto) {
 		if (!normalizedStore.values().contains(dto)) {
 			normalizedStore.put(UUID.randomUUID().toString(), dto);
-		} else {
-			normalizedStore.put(dto.getId(), dto);
 		}
 	}
 
@@ -27,9 +25,10 @@ public class BlotterStoreClient {
 		final Collection<NormalizedOrderDto> orders = normalizedStore.values();
 		return orders
 				.stream()
+				//
 				.filter(order -> criteria != null && !Strings.isNullOrEmpty(criteria.getPortfolio())
-						&& criteria.getPortfolio().equals(order.getPortfolio()))
-				.filter(order -> criteria.getMetaType() != null && criteria.getMetaType().equals(order.getMetaType()))
+						&& criteria.getPortfolio().equals(order.getPortfolio())) //
+				.filter(order -> criteria.getMetaType() != null && criteria.getMetaType().equals(order.getMetaType())) //
 				.map(normalized -> OrderReadDto.builder() //
 						.amount(normalized.getAmount()) //
 						.author(normalized.getAuthor()) //
@@ -40,7 +39,8 @@ public class BlotterStoreClient {
 						.portfolio(normalized.getPortfolio()) //
 						.timestamp(normalized.getTimestamp()) //
 						.build()) //
-				.sorted(Comparator.comparing(OrderReadDto::getTimestamp)).collect(Collectors.toList());
+				.sorted(Comparator.comparing(OrderReadDto::getTimestamp)) //
+				.collect(Collectors.toList());
 
 	}
 
