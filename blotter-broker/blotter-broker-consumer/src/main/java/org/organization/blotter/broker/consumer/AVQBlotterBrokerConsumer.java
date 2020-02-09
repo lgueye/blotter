@@ -2,6 +2,7 @@ package org.organization.blotter.broker.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import or.organization.blotter.broker.model.SourceQueues;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.Payload;
 

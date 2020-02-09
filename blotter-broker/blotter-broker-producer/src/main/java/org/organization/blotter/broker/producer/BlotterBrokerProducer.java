@@ -1,6 +1,9 @@
 package org.organization.blotter.broker.producer;
 
 import lombok.RequiredArgsConstructor;
+import or.organization.blotter.broker.model.avaloq.AvaloqFxOrderDto;
+import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
+import or.organization.blotter.broker.model.SourceQueues;
 import org.springframework.jms.core.JmsTemplate;
 
 /**

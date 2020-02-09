@@ -12,6 +12,7 @@
         <module>blotter-broker-consumer</module>
         <module>blotter-broker-producer</module>
         <module>blotter-broker-server</module>
+        <module>blotter-broker-model</module>
     </modules>
     <dependencies>
         <dependency>

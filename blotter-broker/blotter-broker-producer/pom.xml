@@ -28,5 +28,9 @@
             <groupId>org.organization.blotter</groupId>
             <artifactId>blotter-shared-configuration</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.organization.blotter</groupId>
+            <artifactId>blotter-broker-model</artifactId>
+        </dependency>
     </dependencies>
 </project>

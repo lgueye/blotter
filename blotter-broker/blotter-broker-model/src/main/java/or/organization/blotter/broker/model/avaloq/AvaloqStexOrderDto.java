@@ -1,4 +1,4 @@
-package org.organization.blotter.broker.producer;
+package or.organization.blotter.broker.model.avaloq;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;
@@ -14,9 +14,9 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
-public class RawStexDto {
+public class AvaloqStexOrderDto {
 	private String externalIdentifier;
-	private MetaType metaType;
+	private MetaType metaType = MetaType.stex;
 	private String author;
 	private String portfolio;
 	private Float amount;
