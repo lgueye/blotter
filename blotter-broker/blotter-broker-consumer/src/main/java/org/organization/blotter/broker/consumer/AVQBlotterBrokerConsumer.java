@@ -17,9 +17,9 @@ public class AVQBlotterBrokerConsumer {
 
 	private final List<IncomingMessageProcessor> processors;
 
-	@JmsListener(destination = "AVQ", concurrency = "1", containerFactory = "jmsListenerContainerFactory")
+	@JmsListener(destination = SourceQueues.AVALOQ, concurrency = "1", containerFactory = "jmsListenerContainerFactory")
 	public void onMessage(@Payload final String message) {
-		final ProcessingContext context = ProcessingContext.builder().source("AVQ").timestamp(Instant.now()).message(message).build();
+		final ProcessingContext context = ProcessingContext.builder().source(SourceQueues.AVALOQ).timestamp(Instant.now()).message(message).build();
 		log.info("processing context {}", context);
 		processors.forEach(processor -> processor.process(context));
 	}
