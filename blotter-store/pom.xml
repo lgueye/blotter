@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>blotter-store-client</module>
+        <module>blotter-store-migrations</module>
         <module>blotter-store-server</module>
     </modules>
     <dependencies>
@@ -22,7 +23,6 @@
             <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

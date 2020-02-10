@@ -60,6 +60,10 @@
             <artifactId>blotter-api-consumer</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.organization.blotter</groupId>
+            <artifactId>blotter-store-migrations</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
         </dependency>
@@ -111,6 +115,65 @@
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>migrate-h2</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-jar</argument>
+                                <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-store-migrations/${project.parent.version}/blotter-store-migrations-${project.parent.version}.jar</argument>
+                                <argument>--datasource.driverClassName=${spring.datasource.driverClassName}</argument>
+                                <argument>--datasource.username=${spring.datasource.username}</argument>
+                                <argument>--datasource.url=${blotter.store.server.url}</argument>
+                                <argument>--flyway.clean=true</argument>
+                                <argument>--flyway.migrate=true</argument>
+                                <argument>--logging.level.org.organization=${logging.level}</argument>
+                                <argument>--logging.level.org.flywaydb=WARN</argument>
+                            </arguments>
+                            <executable>java</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>sql-maven-plugin</artifactId>-->
+            <!--<version>${sql-maven-plugin.version}</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>add-defaults</id>-->
+            <!--<phase>pre-integration-test</phase>-->
+            <!--<goals>-->
+            <!--<goal>execute</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<srcFiles>-->
+            <!--<srcFile>src/main/resources/referential_data.sql</srcFile>-->
+            <!--</srcFiles>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--<dependencies>-->
+            <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>${h2.version}</version>-->
+            <!--</dependency>-->
+            <!--</dependencies>-->
+            <!--<configuration>-->
+            <!--<driver>${spring.datasource.driverClassName}</driver>-->
+            <!--<url>${blotter.store.server.url}</url>-->
+            <!--<username>${spring.datasource.username}</username>-->
+            <!--<password></password>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
                 <executions>
                     <execution>
@@ -152,7 +215,7 @@
                 <executions>
                     <execution>
                         <id>run-blotter-store-server</id>
-                        <phase>pre-integration-test</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>start</goal>
                         </goals>
