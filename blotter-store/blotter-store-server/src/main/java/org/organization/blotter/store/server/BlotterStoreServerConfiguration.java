@@ -11,8 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class BlotterStoreServerConfiguration {
 
 	@Bean
-	public H2Server h2Server(@Value("${blotter.store.server.port}") final Integer port,
-			@Value("${blotter.store.server.base-dir}") final String baseDir) {
-		return new H2Server(port, baseDir);
+	public MySQLServer mySQLServer(@Value("${blotter.store.server.port}") final Integer port,
+			@Value("${blotter.store.server.schema}") final String schema, @Value("${blotter.store.server.user}") final String user,
+			@Value("${blotter.store.server.password}") final String password) {
+		return new MySQLServer(port, schema, user, password);
 	}
 }
