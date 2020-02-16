@@ -61,7 +61,6 @@
         <maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <modelmapper.version>2.3.6</modelmapper.version>
         <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
         <process-exec-maven-plugin.version>0.8</process-exec-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -268,16 +267,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jooq</artifactId>
                 <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.modelmapper</groupId>
-                <artifactId>modelmapper</artifactId>
-                <version>${modelmapper.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.modelmapper.extensions</groupId>
-                <artifactId>modelmapper-jooq</artifactId>
-                <version>${modelmapper.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>

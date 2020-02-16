@@ -1,11 +1,14 @@
 package org.organization.blotter.store.client;
 
 import org.jooq.DSLContext;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.NameTokenizers;
-import org.modelmapper.jooq.RecordValueReader;
+import org.jooq.SQLDialect;
+import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.Settings;
+import org.jooq.impl.DefaultDSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 /**
  * @author louis.gueye@gmail.com
@@ -14,14 +17,12 @@ import org.springframework.context.annotation.Configuration;
 public class BlotterStoreClientConfiguration {
 
 	@Bean
-	public ModelMapper modelMapper() {
-		final ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setSourceNameTokenizer(NameTokenizers.UNDERSCORE).addValueReader(new RecordValueReader());
-		return mapper;
+	public DSLContext dslContext(final DataSource dataSource) {
+		return new DefaultDSLContext(dataSource, SQLDialect.MYSQL, new Settings().withRenderNameCase(RenderNameCase.LOWER));
 	}
 
 	@Bean
-	public BlotterStoreClient blotterStoreClient(final DSLContext dslContext, final ModelMapper modelMapper) {
-		return new BlotterStoreClient(dslContext, modelMapper);
+	public BlotterStoreClient blotterStoreClient(final DSLContext dslContext) {
+		return new BlotterStoreClient(dslContext);
 	}
 }

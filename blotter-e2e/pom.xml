@@ -30,18 +30,14 @@
         <blotter.store.server.http.port>9001</blotter.store.server.http.port>
         <blotter.store.server.password>secret</blotter.store.server.password>
         <blotter.store.server.port>9000</blotter.store.server.port>
-        <blotter.store.server.schema>blotter_db</blotter.store.server.schema>
+        <blotter.store.server.schema>blotter</blotter.store.server.schema>
         <blotter.store.server.url>jdbc:mysql://localhost:${blotter.store.server.port}/${blotter.store.server.schema}?autoReconnect=true</blotter.store.server.url>
         <blotter.store.server.user>blotter_user</blotter.store.server.user>
         <logging.level>INFO</logging.level>
-        <spring.datasource.driverClassName>${blotter.store.client.driver}</spring.datasource.driverClassName>
+        <spring.datasource.driver-class-name>${blotter.store.client.driver}</spring.datasource.driver-class-name>
         <spring.datasource.hikari.maximum-pool-size>5</spring.datasource.hikari.maximum-pool-size>
         <spring.datasource.password>${blotter.store.server.password}</spring.datasource.password>
         <spring.datasource.username>${blotter.store.server.user}</spring.datasource.username>
-        <!--<spring.datasource.validationQuery>SELECT 1</spring.datasource.validationQuery>-->
-        <!--<spring.jpa.hibernate.ddl-auto>validate</spring.jpa.hibernate.ddl-auto>-->
-        <!--<spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.H2Dialect</spring.jpa.properties.hibernate.dialect>-->
-        <!--<spring.jpa.show-sql>false</spring.jpa.show-sql>-->
     </properties>
     <dependencies>
         <dependency>
@@ -148,6 +144,9 @@
                     <url>${blotter.store.server.url}</url>
                     <user>${blotter.store.server.user}</user>
                     <password>${blotter.store.server.password}</password>
+                    <schemas>
+                        <schema>${blotter.store.server.schema}</schema>
+                    </schemas>
                     <baselineOnMigrate>true</baselineOnMigrate>
                     <placeholderPrefix>$_</placeholderPrefix>
                     <locations>
@@ -155,86 +154,6 @@
                     </locations>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>exec-maven-plugin</artifactId>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>migrate-h2</id>-->
-            <!--<phase>pre-integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>exec</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<arguments>-->
-            <!--<argument>-jar</argument>-->
-            <!--<argument>${user.home}/.m2/repository/org/organization/blotter/blotter-store-migrations/${project.parent.version}/blotter-store-migrations-${project.parent.version}.jar</argument>-->
-            <!--<argument>&#45;&#45;datasource.driverClassName=${spring.datasource.driverClassName}</argument>-->
-            <!--<argument>&#45;&#45;datasource.username=${spring.datasource.username}</argument>-->
-            <!--<argument>&#45;&#45;datasource.url=${blotter.store.server.url}</argument>-->
-            <!--<argument>&#45;&#45;flyway.clean=true</argument>-->
-            <!--<argument>&#45;&#45;flyway.migrate=true</argument>-->
-            <!--<argument>&#45;&#45;logging.level.org.organization=${logging.level}</argument>-->
-            <!--<argument>&#45;&#45;logging.level.org.flywaydb=WARN</argument>-->
-            <!--</arguments>-->
-            <!--<executable>java</executable>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--<execution>-->
-            <!--<id>migrate-h2</id>-->
-            <!--<phase>pre-integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>exec</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<arguments>-->
-            <!--<argument>-jar</argument>-->
-            <!--<argument>${user.home}/.m2/repository/org/organization/blotter/blotter-store-migrations/${project.parent.version}/blotter-store-migrations-${project.parent.version}.jar</argument>-->
-            <!--<argument>&#45;&#45;datasource.driverClassName=${spring.datasource.driverClassName}</argument>-->
-            <!--<argument>&#45;&#45;datasource.username=${spring.datasource.username}</argument>-->
-            <!--<argument>&#45;&#45;datasource.url=${blotter.store.server.url}</argument>-->
-            <!--<argument>&#45;&#45;flyway.clean=true</argument>-->
-            <!--<argument>&#45;&#45;flyway.migrate=true</argument>-->
-            <!--<argument>&#45;&#45;logging.level.org.organization=${logging.level}</argument>-->
-            <!--<argument>&#45;&#45;logging.level.org.flywaydb=WARN</argument>-->
-            <!--</arguments>-->
-            <!--<executable>java</executable>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>sql-maven-plugin</artifactId>-->
-            <!--<version>${sql-maven-plugin.version}</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>add-defaults</id>-->
-            <!--<phase>pre-integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>execute</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<srcFiles>-->
-            <!--<srcFile>src/main/resources/referential_data.sql</srcFile>-->
-            <!--</srcFiles>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>com.h2database</groupId>-->
-            <!--<artifactId>h2</artifactId>-->
-            <!--<version>${h2.version}</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--<configuration>-->
-            <!--<driver>${spring.datasource.driverClassName}</driver>-->
-            <!--<url>${blotter.store.server.url}</url>-->
-            <!--<username>${spring.datasource.username}</username>-->
-            <!--<password></password>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -368,16 +287,11 @@
                                 <argument>--server.port=${blotter.api.server.http.port}</argument>
                                 <argument>--logging.level.org.organization=${logging.level}</argument>
                                 <argument>--logging.level.org.springframework=WARN</argument>
-                                <argument>--spring.datasource.driverClassName=${spring.datasource.driverClassName}</argument>
                                 <argument>--spring.datasource.hikari.maximum-pool-size=${spring.datasource.hikari.maximum-pool-size}</argument>
+                                <argument>--spring.datasource.driver-class-name=${spring.datasource.driver-class-name}</argument>
                                 <argument>--spring.datasource.username=${spring.datasource.username}</argument>
                                 <argument>--spring.datasource.password=${spring.datasource.password}</argument>
                                 <argument>--spring.datasource.url=${blotter.store.server.url}</argument>
-                                <!--<argument>&#45;&#45;spring.datasource.validationQuery=${spring.datasource.validationQuery}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.hibernate.ddl-auto=${spring.jpa.hibernate.ddl-auto}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.properties.hibernate.dialect=${spring.jpa.properties.hibernate.dialect}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.show-sql=${spring.jpa.show-sql}</argument>-->
-                                <!--<argument>&#45;&#45;spring.jpa.open-in-view=false</argument>-->
                                 <argument>--blotter.broker.server.url=${blotter.broker.server.url}</argument>
                                 <argument>--spring.kafka.bootstrap-servers=${blotter.notification.server.url}</argument>
                             </arguments>

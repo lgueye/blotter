@@ -8,19 +8,13 @@
     </parent>
     <artifactId>blotter-store-client</artifactId>
     <properties>
+        <blotter.store.server.schema>blotter</blotter.store.server.schema>
         <spring.datasource.driverClassName>org.h2.Driver</spring.datasource.driverClassName>
+        <spring.datasource.password>secret</spring.datasource.password>
         <spring.datasource.url>jdbc:h2:file:/tmp/blotter</spring.datasource.url>
-        <spring.datasource.username>sa</spring.datasource.username>
+        <spring.datasource.username>blotter_user</spring.datasource.username>
     </properties>
     <dependencies>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-jdbc</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.organization.blotter</groupId>
             <artifactId>blotter-api-model</artifactId>
@@ -30,20 +24,42 @@
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.modelmapper.extensions</groupId>
-            <artifactId>modelmapper-jooq</artifactId>
-        </dependency>
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>${sql-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>create-user-and-schema</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <sqlCommand>CREATE USER IF NOT EXISTS ${spring.datasource.username} IDENTIFIED BY ${spring.datasource.password}; CREATE SCHEMA IF NOT EXISTS ${blotter.store.server.schema} AUTHORIZATION sa; GRANT ALL ON SCHEMA ${blotter.store.server.schema} TO ${spring.datasource.username};</sqlCommand>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>${spring.datasource.driverClassName}</driver>
+                    <url>${spring.datasource.url}</url>
+                    <username>sa</username>
+                    <password></password>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
@@ -70,9 +86,13 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <driver>org.h2.Driver</driver>
+                    <driver>${spring.datasource.driverClassName}</driver>
                     <url>${spring.datasource.url}</url>
                     <user>sa</user>
+                    <password></password>
+                    <schemas>
+                        <schema>${blotter.store.server.schema}</schema>
+                    </schemas>
                     <baselineOnMigrate>true</baselineOnMigrate>
                     <placeholderPrefix>$_</placeholderPrefix>
                     <locations>
@@ -95,7 +115,7 @@
                             <jdbc>
                                 <driver>${spring.datasource.driverClassName}</driver>
                                 <url>${spring.datasource.url}</url>
-                                <user>${spring.datasource.username}</user>
+                                <user>sa</user>
                                 <password></password>
                             </jdbc>
                             <generator>
@@ -103,7 +123,7 @@
                                     <name>org.jooq.meta.h2.H2Database</name>
                                     <includes>.*</includes>
                                     <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>PUBLIC</inputSchema>
+                                    <inputSchema>${blotter.store.server.schema}</inputSchema>
                                 </database>
                                 <generate>
                                     <deprecated>false</deprecated>

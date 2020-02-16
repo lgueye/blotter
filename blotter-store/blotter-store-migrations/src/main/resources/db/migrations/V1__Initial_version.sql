@@ -3,13 +3,13 @@ DROP TABLE IF EXISTS normalized_orders CASCADE;
 CREATE TABLE normalized_orders (
   id                  VARCHAR(255)  NOT NULL,
   external_identifier VARCHAR(255)  NOT NULL,
-  portfolio           VARCHAR(255)  NOT NULL,
-  meta_type           VARCHAR(255)  NOT NULL,
-  status              VARCHAR(255)  NOT NULL,
+  portfolio           VARCHAR(50)   NOT NULL,
+  meta_type           VARCHAR(50)   NOT NULL,
+  status              VARCHAR(50)   NOT NULL,
   author              VARCHAR(255)  NOT NULL,
-  intent              VARCHAR(255)  NOT NULL,
+  intent              VARCHAR(50)   NOT NULL,
   amount              VARCHAR(255)  NOT NULL,
-  instrument          VARCHAR(255)  NOT NULL,
+  instrument          VARCHAR(50)   NOT NULL,
   details             VARCHAR(4000) NOT NULL,
   `timestamp`         VARCHAR(255)  NOT NULL,
   PRIMARY KEY (id)
