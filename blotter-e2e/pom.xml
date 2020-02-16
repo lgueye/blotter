@@ -291,6 +291,10 @@
                                 <argument>--spring.datasource.driver-class-name=${spring.datasource.driver-class-name}</argument>
                                 <argument>--spring.datasource.username=${spring.datasource.username}</argument>
                                 <argument>--spring.datasource.password=${spring.datasource.password}</argument>
+                                <argument>--spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect</argument>
+                                <argument>--spring.jpa.show-sql=false</argument>
+                                <argument>--spring.jpa.open-in-view=false</argument>
+                                <argument>--spring.jpa.hibernate.ddl-auto=validate</argument>
                                 <argument>--spring.datasource.url=${blotter.store.server.url}</argument>
                                 <argument>--blotter.broker.server.url=${blotter.broker.server.url}</argument>
                                 <argument>--spring.kafka.bootstrap-servers=${blotter.notification.server.url}</argument>

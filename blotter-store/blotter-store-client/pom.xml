@@ -7,13 +7,6 @@
         <version>0.0.1</version>
     </parent>
     <artifactId>blotter-store-client</artifactId>
-    <properties>
-        <blotter.store.server.schema>blotter</blotter.store.server.schema>
-        <spring.datasource.driverClassName>org.h2.Driver</spring.datasource.driverClassName>
-        <spring.datasource.password>secret</spring.datasource.password>
-        <spring.datasource.url>jdbc:h2:file:/tmp/blotter</spring.datasource.url>
-        <spring.datasource.username>blotter_user</spring.datasource.username>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.organization.blotter</groupId>
@@ -21,149 +14,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>${sql-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>create-user-and-schema</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <sqlCommand>CREATE USER IF NOT EXISTS ${spring.datasource.username} IDENTIFIED BY ${spring.datasource.password}; CREATE SCHEMA IF NOT EXISTS ${blotter.store.server.schema} AUTHORIZATION sa; GRANT ALL ON SCHEMA ${blotter.store.server.schema} TO ${spring.datasource.username};</sqlCommand>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <driver>${spring.datasource.driverClassName}</driver>
-                    <url>${spring.datasource.url}</url>
-                    <username>sa</username>
-                    <password></password>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>info</goal>
-                            <goal>clean</goal>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.organization.blotter</groupId>
-                        <artifactId>blotter-store-migrations</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <driver>${spring.datasource.driverClassName}</driver>
-                    <url>${spring.datasource.url}</url>
-                    <user>sa</user>
-                    <password></password>
-                    <schemas>
-                        <schema>${blotter.store.server.schema}</schema>
-                    </schemas>
-                    <baselineOnMigrate>true</baselineOnMigrate>
-                    <placeholderPrefix>$_</placeholderPrefix>
-                    <locations>
-                        <location>db/migrations</location>
-                    </locations>
-                </configuration>
-            </plugin>
-            <!-- The jOOQ code generator plugin -->
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-mysql</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>${spring.datasource.driverClassName}</driver>
-                                <url>${spring.datasource.url}</url>
-                                <user>sa</user>
-                                <password></password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <name>org.jooq.meta.h2.H2Database</name>
-                                    <includes>.*</includes>
-                                    <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>${blotter.store.server.schema}</inputSchema>
-                                </database>
-                                <generate>
-                                    <deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>false</pojos>
-                                </generate>
-                                <target>
-                                    <packageName>org.organization.blotter.store.client.model</packageName>
-                                    <directory>${project.build.directory}/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/jooq/</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
