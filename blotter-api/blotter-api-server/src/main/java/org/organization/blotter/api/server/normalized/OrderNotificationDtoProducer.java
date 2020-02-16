@@ -19,6 +19,7 @@ public class OrderNotificationDtoProducer implements Converter<NormalizedOrderDt
 				.intent(normalizedOrderDto.getIntent()) //
 				.metaType(normalizedOrderDto.getMetaType()) //
 				.portfolio(normalizedOrderDto.getPortfolio()) //
+				.status(normalizedOrderDto.getStatus()) //
 				.timestamp(normalizedOrderDto.getTimestamp()) //
 				.build();
 	}
