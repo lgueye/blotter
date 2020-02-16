@@ -35,6 +35,7 @@ public class BlotterStoreClient {
 				.intent(dto.getIntent()) //
 				.metaType(dto.getMetaType()) //
 				.portfolio(dto.getPortfolio()) //
+				.status(dto.getStatus()) //
 				.build();
 
 		if (!repository.findOne(Example.of(example)).isPresent()) {

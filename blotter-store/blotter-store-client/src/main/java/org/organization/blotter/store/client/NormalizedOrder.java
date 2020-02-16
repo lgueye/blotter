@@ -26,7 +26,7 @@ import java.time.Instant;
 		@Index(name = "idx_normalized_orders_portfolio", columnList = "portfolio"),
 		@Index(name = "idx_normalized_orders_timestamp", columnList = "timestamp"),
 		@Index(name = "idx_normalized_orders_uniq", columnList = "portfolio, instrument, meta_type, intent, status", unique = true)})
-@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent"})
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "status"})
 public class NormalizedOrder {
 	@Id
 	private String id;
