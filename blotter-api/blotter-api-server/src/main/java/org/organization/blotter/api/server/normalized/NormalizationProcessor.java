@@ -44,7 +44,7 @@ public class NormalizationProcessor implements IncomingMessageProcessor {
 			return notification;
 		}) // produce notification order
 				.filter(Objects::nonNull).forEach(notification -> {
-					orderNotificationService.produce(notification);
+					orderNotificationService.send(notification);
 					log.info("Sent notification {} to notification broker", notification);
 				}); // notify notification order consumers
 	}

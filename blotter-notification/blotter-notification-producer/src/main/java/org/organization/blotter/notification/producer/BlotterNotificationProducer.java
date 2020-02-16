@@ -17,7 +17,7 @@ public class BlotterNotificationProducer {
 	private final String destination;
 	private final KafkaTemplate<String, OrderNotificationDto> kafkaTemplate;
 
-	public void produce(OrderNotificationDto notification) {
+	public void send(OrderNotificationDto notification) {
 		Message<OrderNotificationDto> message = MessageBuilder.withPayload(notification).setHeader(KafkaHeaders.TOPIC, destination).build();
 		kafkaTemplate.send(message);
 		// log.info("Sent data='{}' to topic='{}'", notification, destination);
