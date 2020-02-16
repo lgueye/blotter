@@ -2,6 +2,7 @@ package or.organization.blotter.broker.model.avaloq;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;
+import org.organization.blotter.shared.model.OrderStatus;
 import org.organization.blotter.shared.model.TradeIntent;
 
 import java.time.Instant;
@@ -22,5 +23,6 @@ public class AvaloqStexOrderDto {
 	private Float amount;
 	private TradeIntent intent;
 	private String instrument;
+	private OrderStatus status;
 	private Instant timestamp;
 }

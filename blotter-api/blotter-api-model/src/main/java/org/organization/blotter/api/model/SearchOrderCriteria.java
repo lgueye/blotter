@@ -2,6 +2,7 @@ package org.organization.blotter.api.model;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;
+import org.organization.blotter.shared.model.OrderStatus;
 import org.organization.blotter.shared.model.TradeIntent;
 
 import java.time.Instant;
@@ -22,5 +23,6 @@ public class SearchOrderCriteria {
 	private Float amount;
 	private TradeIntent intent;
 	private String instrument;
+	private OrderStatus status;
 	private Instant timestamp;
 }

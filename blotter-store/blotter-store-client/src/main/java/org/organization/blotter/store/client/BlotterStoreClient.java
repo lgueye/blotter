@@ -1,10 +1,10 @@
 package org.organization.blotter.store.client;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
+import lombok.RequiredArgsConstructor;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.api.model.OrderReadDto;
 import org.organization.blotter.api.model.SearchOrderCriteria;
+import org.springframework.data.domain.Example;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,36 +12,57 @@ import java.util.stream.Collectors;
 /**
  * @author louis.gueye@gmail.com
  */
+@RequiredArgsConstructor
 public class BlotterStoreClient {
-	private final Map<String, NormalizedOrderDto> normalizedStore = Maps.newConcurrentMap();
+
+	private final NormalizedOrderRepository repository;
 
 	public void save(NormalizedOrderDto dto) {
-		if (!normalizedStore.values().contains(dto)) {
-			normalizedStore.put(UUID.randomUUID().toString(), dto);
+		final NormalizedOrder order = NormalizedOrder.builder() //
+				.amount(dto.getAmount().toString()) //
+				.author(dto.getAuthor()) //
+				.details(dto.getDetails()) //
+				.externalIdentifier(dto.getExternalIdentifier()) //
+				.instrument(dto.getInstrument()) //
+				.intent(dto.getIntent()).metaType(dto.getMetaType()) //
+				.id(UUID.randomUUID().toString()) //
+				.portfolio(dto.getPortfolio()) //
+				.status(dto.getStatus()) //
+				.timestamp(dto.getTimestamp()) //
+				.build();
+		final NormalizedOrder example = NormalizedOrder.builder() //
+				.instrument(dto.getInstrument()) //
+				.intent(dto.getIntent()) //
+				.metaType(dto.getMetaType()) //
+				.portfolio(dto.getPortfolio()) //
+				.build();
+
+		if (!repository.findOne(Example.of(example)).isPresent()) {
+			repository.save(order);
 		}
 	}
 
 	public List<OrderReadDto> findByCriteria(SearchOrderCriteria criteria) {
-		final Collection<NormalizedOrderDto> orders = normalizedStore.values();
-		return orders
-				.stream()
-				//
-				.filter(order -> criteria != null && !Strings.isNullOrEmpty(criteria.getPortfolio())
-						&& criteria.getPortfolio().equals(order.getPortfolio())) //
-				.filter(order -> criteria.getMetaType() != null && criteria.getMetaType().equals(order.getMetaType())) //
-				.map(normalized -> OrderReadDto.builder() //
-						.amount(normalized.getAmount()) //
-						.author(normalized.getAuthor()) //
-						.externalIdentifier(normalized.getExternalIdentifier()) //
-						.instrument(normalized.getInstrument()) //
-						.intent(normalized.getIntent()) //
-						.metaType(normalized.getMetaType()) //
-						.portfolio(normalized.getPortfolio()) //
-						.timestamp(normalized.getTimestamp()) //
+		if (criteria == null)
+			return Collections.emptyList();
+
+		final NormalizedOrder example = NormalizedOrder.builder().metaType(criteria.getMetaType()).portfolio(criteria.getPortfolio()).build();
+		return repository.findAll(Example.of(example)) //
+				.stream() //
+				.map(record -> OrderReadDto.builder() //
+						.amount(Float.valueOf(record.getAmount())) //
+						.author(record.getAuthor()) //
+						.externalIdentifier(record.getExternalIdentifier()) //
+						.instrument(record.getInstrument()) //
+						.intent(record.getIntent()) //
+						.metaType(record.getMetaType()) //
+						.portfolio(record.getPortfolio()) //
+						.status(record.getStatus()) //
+						.timestamp(record.getTimestamp()) //
 						.build()) //
+				.filter(Objects::nonNull) //
 				.sorted(Comparator.comparing(OrderReadDto::getTimestamp)) //
 				.collect(Collectors.toList());
-
 	}
 
 }
