@@ -47,8 +47,9 @@ public class AvaloqStexOrderDtoToNormalizedOrderDtoProducer implements Normalize
 					.metaType(MetaType.stex) //
 					.intent(order.getIntent()) //
 					.portfolio(order.getPortfolio()) //
+					.status(order.getStatus()) //
 					.timestamp(context.getTimestamp()) //
-					.build();
+					.details(objectMapper.writeValueAsString(order)).build();
 		} catch (Exception e) {
 			throw new IllegalStateException("");
 		}

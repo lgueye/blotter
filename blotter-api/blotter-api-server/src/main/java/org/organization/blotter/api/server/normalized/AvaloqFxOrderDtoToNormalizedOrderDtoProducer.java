@@ -47,8 +47,9 @@ public class AvaloqFxOrderDtoToNormalizedOrderDtoProducer implements NormalizedO
 					.metaType(MetaType.fx) //
 					.intent(order.getIntent()) //
 					.portfolio(order.getPortfolio()) //
+					.status(order.getStatus()) //
 					.timestamp(context.getTimestamp()) //
-					.build();
+					.details(objectMapper.writeValueAsString(order)).build();
 		} catch (Exception e) {
 			throw new IllegalStateException("");
 		}
