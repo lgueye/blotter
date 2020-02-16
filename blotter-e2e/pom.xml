@@ -50,10 +50,6 @@
         </dependency>
         <dependency>
             <groupId>org.organization.blotter</groupId>
-            <artifactId>blotter-store-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.organization.blotter</groupId>
             <artifactId>blotter-notification-consumer</artifactId>
         </dependency>
         <dependency>
@@ -63,6 +59,14 @@
         <dependency>
             <groupId>org.organization.blotter</groupId>
             <artifactId>blotter-store-migrations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -181,6 +185,14 @@
                                 <property>
                                     <name>blotter.store.server.url</name>
                                     <value>${blotter.store.server.url}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.store.server.user</name>
+                                    <value>${blotter.store.server.user}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.store.server.password</name>
+                                    <value>${blotter.store.server.password}</value>
                                 </property>
                                 <property>
                                     <name>spring.kafka.bootstrap-servers</name>
