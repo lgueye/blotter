@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import or.organization.blotter.broker.model.avaloq.AvaloqFxOrderDto;
 import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
 import or.organization.blotter.broker.model.SourceQueues;
+import or.organization.blotter.broker.model.avaloq.SmartTradeFxOrderDto;
 import org.springframework.jms.core.JmsTemplate;
 
 /**
@@ -20,5 +21,9 @@ public class BlotterBrokerProducer {
 
 	public void send(final AvaloqFxOrderDto message) {
 		jmsTemplate.convertAndSend(SourceQueues.AVALOQ, message);
+	}
+
+	public void send(final SmartTradeFxOrderDto message) {
+		jmsTemplate.convertAndSend(SourceQueues.SMART_TRADE, message);
 	}
 }

@@ -5,4 +5,5 @@ package or.organization.blotter.broker.model;
  */
 public class SourceQueues {
 	public static final String AVALOQ = "AVQ";
+	public static final String SMART_TRADE = "SMT";
 }

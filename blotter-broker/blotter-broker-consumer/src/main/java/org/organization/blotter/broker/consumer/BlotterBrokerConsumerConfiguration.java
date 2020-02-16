@@ -48,7 +48,7 @@ public class BlotterBrokerConsumerConfiguration {
 	}
 
 	@Bean
-	public AVQBlotterBrokerConsumer blotterBrokerConsumer(final List<IncomingMessageProcessor> processors) {
-		return new AVQBlotterBrokerConsumer(processors);
+	public BlotterBrokerConsumer blotterBrokerConsumer(final List<IncomingMessageProcessor> processors) {
+		return new BlotterBrokerConsumer(processors);
 	}
 }
