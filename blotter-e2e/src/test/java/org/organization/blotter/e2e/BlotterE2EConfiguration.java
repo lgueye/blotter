@@ -1,5 +1,7 @@
 package org.organization.blotter.e2e;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.organization.blotter.api.consumer.BlotterApiConsumerConfiguration;
 import org.organization.blotter.broker.producer.BlotterBrokerProducerConfiguration;
 import org.organization.blotter.notification.consumer.BlotterNotificationConsumerConfiguration;
@@ -21,11 +23,16 @@ public class BlotterE2EConfiguration {
 	@Bean
 	public DataSource dataSource(@Value("${blotter.store.server.url}") final String url,
 			@Value("${blotter.store.server.user}") final String username, @Value("${blotter.store.server.password}") final String password) {
-		final SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-		dataSource.setDriverClass(com.mysql.cj.jdbc.Driver.class);
-		dataSource.setUrl(url);
-		dataSource.setUsername(username);
-		dataSource.setPassword(password);
-		return dataSource;
+		final HikariConfig hikariConfig = new HikariConfig();
+		hikariConfig.setJdbcUrl(url);
+		hikariConfig.setUsername(username);
+		hikariConfig.setPassword(password);
+		hikariConfig.setPoolName("e2e-hikari");
+		hikariConfig.setConnectionTestQuery("select 1");
+		hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		hikariConfig.setMinimumIdle(2);
+		hikariConfig.setMaximumPoolSize(10);
+		hikariConfig.setSchema("blotter");
+		return new HikariDataSource(hikariConfig);
 	}
 }
