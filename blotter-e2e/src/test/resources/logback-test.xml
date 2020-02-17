@@ -14,8 +14,9 @@
     <logger name="org.springframework"  level="WARN" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
-    <logger name="org.apache" level="INFO" />
-    <logger name="httpclient" level="INFO" />
+    <logger name="org.apache" level="WARN" />
+    <logger name="httpclient" level="WARN" />
+    <logger name="kafka" level="WARN" />
     <logger name="org.hibernate"  level="WARN" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
