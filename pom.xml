@@ -5,9 +5,6 @@
     <artifactId>blotter-root</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
-    <prerequisites>
-        <maven>3.5.0</maven>
-    </prerequisites>
     <modules>
         <module>blotter-api</module>
         <module>blotter-notification</module>
@@ -55,6 +52,7 @@
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
         <maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
+        <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
         <maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
@@ -594,6 +592,11 @@
                     <artifactId>jooq-codegen-maven</artifactId>
                     <version>${jooq.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>${maven-jxr-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -682,4 +685,12 @@
             </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
