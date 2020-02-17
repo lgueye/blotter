@@ -1,4 +1,4 @@
-Feature: stex search
+Feature: stex notifications
 
   Scenario: Should properly be notified of stex messages
 
