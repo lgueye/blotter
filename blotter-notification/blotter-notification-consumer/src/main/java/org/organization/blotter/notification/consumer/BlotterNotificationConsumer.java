@@ -21,7 +21,7 @@ public class BlotterNotificationConsumer {
 
 	public void subscribe(String user) {
 		subscribers.add(user);
-		log.info("{} subscribed to notifications", user);
+		// log.info("{} subscribed to notifications", user);
 	}
 
 	public void unsubscribe(String user) {
@@ -31,7 +31,7 @@ public class BlotterNotificationConsumer {
 	public List<OrderNotificationDto> getNotifications(String subscriber) {
 		final Optional<String> subscribed = subscribers.stream().filter(s -> s.equals(subscriber)).findFirst();
 		if (subscribed.isPresent()) {
-			log.info("{} found among subscribers", subscriber);
+			// log.info("{} found among subscribers", subscriber);
 			return notifications.stream().sorted(Comparator.comparing(OrderNotificationDto::getTimestamp)).collect(Collectors.toList());
 		}
 
