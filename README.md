@@ -59,11 +59,12 @@ Missing Features
     - test API
 
 - Cross cutting
-    - error management 
-    - log strategy 
-    - unit tests 
-    - http tests (server, client) 
-    - persistence tests 
+    - error management
+    - log strategy
+    - unit tests
+    - http tests (server, client)
+    - persistence tests
+    - TLS support
     
 Design
 ===
