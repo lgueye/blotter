@@ -15,7 +15,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "normalized_orders", indexes = {@Index(name = "idx_normalized_orders_ext_id", columnList = "external_identifier"),
 		@Index(name = "idx_normalized_orders_meta_type", columnList = "meta_type"),

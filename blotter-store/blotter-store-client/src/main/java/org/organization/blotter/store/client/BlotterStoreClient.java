@@ -38,8 +38,11 @@ public class BlotterStoreClient {
 				.status(dto.getStatus()) //
 				.build();
 
-		if (!repository.findOne(Example.of(example)).isPresent()) {
+		final Optional<NormalizedOrder> persistedOptional = repository.findOne(Example.of(example));
+		if (!persistedOptional.isPresent()) {
 			repository.save(order);
+		} else {
+			repository.save(order.toBuilder().id(persistedOptional.get().getId()).build());
 		}
 	}
 
