@@ -41,7 +41,7 @@ public class BlotterApiConsumerSteps implements En {
 					final List<OrderReadDto> expected = dataTable.asList(OrderReadDto.class);
 					final Duration timeout = Duration.parse(durationAsString);
 					Awaitility.await().atMost(timeout.toMillis(), TimeUnit.MILLISECONDS).pollDelay(50, TimeUnit.MILLISECONDS)
-							.pollInterval(50, TimeUnit.MILLISECONDS).until(() -> {
+							.pollInterval(200, TimeUnit.MILLISECONDS).until(() -> {
 								final List<OrderReadDto> actual = blotterApiConsumer.findByCriteria(criteria.iterator().next());
 								// log.info("expected => {}", expected);
 								// log.info("actual => {}", actual);
