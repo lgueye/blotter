@@ -10,7 +10,7 @@ Feature: stex search
 
     And blotter system receives fx orders from AVQ
       | externalIdentifier                     | author  | portfolio    | amount | instrument | intent | status |
-      | stex-ingestion-external-identifier-300 | mathieu | PF-000000001 | 800000 | LU19000000 | sell   | placed |
+      | stex-ingestion-external-identifier-300 | mathieu | PF-000000001 | 800000 | LU19000000 | buy   | placed |
 
     When alban searches for orders by criteria
       | portfolio    | metaType |
