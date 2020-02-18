@@ -1,4 +1,4 @@
-package or.organization.blotter.broker.model.avaloq;
+package or.organization.blotter.broker.model.smarttrade;
 
 import lombok.*;
 import org.organization.blotter.shared.model.MetaType;

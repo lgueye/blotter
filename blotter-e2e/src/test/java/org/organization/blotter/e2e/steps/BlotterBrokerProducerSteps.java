@@ -6,7 +6,7 @@ import io.cucumber.java8.En;
 import or.organization.blotter.broker.model.avaloq.AvaloqFxOrderDto;
 import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
 import or.organization.blotter.broker.model.SourceQueues;
-import or.organization.blotter.broker.model.avaloq.SmartTradeFxOrderDto;
+import or.organization.blotter.broker.model.smarttrade.SmartTradeFxOrderDto;
 import org.organization.blotter.broker.producer.BlotterBrokerProducer;
 import org.organization.blotter.shared.model.MetaType;
 

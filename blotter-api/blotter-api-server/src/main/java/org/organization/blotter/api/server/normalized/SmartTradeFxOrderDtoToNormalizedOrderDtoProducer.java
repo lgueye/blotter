@@ -3,7 +3,7 @@ package org.organization.blotter.api.server.normalized;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
-import or.organization.blotter.broker.model.avaloq.SmartTradeFxOrderDto;
+import or.organization.blotter.broker.model.smarttrade.SmartTradeFxOrderDto;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.broker.consumer.ProcessingContext;
 import org.organization.blotter.shared.model.MetaType;

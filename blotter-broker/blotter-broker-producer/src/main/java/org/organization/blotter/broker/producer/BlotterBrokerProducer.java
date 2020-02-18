@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import or.organization.blotter.broker.model.avaloq.AvaloqFxOrderDto;
 import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
 import or.organization.blotter.broker.model.SourceQueues;
-import or.organization.blotter.broker.model.avaloq.SmartTradeFxOrderDto;
+import or.organization.blotter.broker.model.smarttrade.SmartTradeFxOrderDto;
 import org.springframework.jms.core.JmsTemplate;
 
 /**
