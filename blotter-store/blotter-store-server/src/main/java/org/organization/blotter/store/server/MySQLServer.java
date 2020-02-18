@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.Charset.UTF8;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
-import static com.wix.mysql.distribution.Version.v8_0_11;
+import static com.wix.mysql.distribution.Version.v5_7_latest;
 
 /**
  * @author louis.gueye@gmail.com
@@ -28,8 +28,8 @@ public class MySQLServer {
 
 	@PostConstruct
 	public void postConstruct() {
-		final MysqldConfig config = aMysqldConfig(v8_0_11).withCharset(UTF8).withPort(port).withUser(user, password).withTimeZone("Europe/Zurich")
-				.withTimeout(2, TimeUnit.MINUTES).build();
+		final MysqldConfig config = aMysqldConfig(v5_7_latest).withCharset(UTF8).withPort(port).withUser(user, password)
+				.withTimeZone("Europe/Zurich").withTimeout(2, TimeUnit.MINUTES).build();
 		server = anEmbeddedMysql(config).addSchema(schema).start();
 	}
 
