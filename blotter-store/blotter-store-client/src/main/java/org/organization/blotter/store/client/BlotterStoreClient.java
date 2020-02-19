@@ -1,6 +1,7 @@
 package org.organization.blotter.store.client;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.api.model.OrderReadDto;
 import org.organization.blotter.api.model.SearchOrderCriteria;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
  * @author louis.gueye@gmail.com
  */
 @RequiredArgsConstructor
+@Slf4j
 public class BlotterStoreClient {
 
 	private final NormalizedOrderRepository repository;
@@ -37,11 +39,13 @@ public class BlotterStoreClient {
 				.portfolio(dto.getPortfolio()) //
 				.status(dto.getStatus()) //
 				.build();
+		log.info("Looking for duplicate before saving {}", example);
 
 		final Optional<NormalizedOrder> persistedOptional = repository.findOne(Example.of(example));
 		if (!persistedOptional.isPresent()) {
 			repository.save(order);
 		} else {
+			// TODO : merge
 			repository.save(order.toBuilder().id(persistedOptional.get().getId()).build());
 		}
 	}

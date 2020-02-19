@@ -48,7 +48,12 @@ public class BlotterBrokerConsumerConfiguration {
 	}
 
 	@Bean
-	public BlotterBrokerConsumer blotterBrokerConsumer(final List<IncomingMessageProcessor> processors) {
-		return new BlotterBrokerConsumer(processors);
+	public BlotterBrokerReactor blotterBrokerReactor(final List<IncomingMessageProcessor> processors) {
+		return new BlotterBrokerReactor(processors);
+	}
+
+	@Bean
+	public BlotterBrokerConsumer blotterBrokerConsumer(BlotterBrokerReactor blotterBrokerReactor) {
+		return new BlotterBrokerConsumer(blotterBrokerReactor);
 	}
 }

@@ -675,7 +675,8 @@
                         <exclude>**/*Server.class</exclude>
                         <exclude>**/*Broker.class</exclude>
                         <exclude>**/*Configuration.class</exclude>
-                        <exclude>**/domain/*.class</exclude>
+                        <exclude>**/model/*.class</exclude>
+                        <exclude>**/shared/*.class</exclude>
                     </excludes>
                     <rules>
                         <rule implementation="org.jacoco.maven.RuleConfiguration">

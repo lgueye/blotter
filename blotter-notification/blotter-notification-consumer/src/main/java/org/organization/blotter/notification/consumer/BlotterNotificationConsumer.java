@@ -24,6 +24,14 @@ public class BlotterNotificationConsumer {
 		// log.info("{} subscribed to notifications", user);
 	}
 
+	Set<String> getSubscribers() {
+		return subscribers;
+	}
+
+	Set<OrderNotificationDto> getNotifications() {
+		return notifications;
+	}
+
 	public void unsubscribe(String user) {
 		subscribers.remove(user);
 	}
