@@ -24,10 +24,13 @@ public class SearchOrderCriteriaToMapConverter implements Converter<SearchOrderC
 			target.put("portfolio", source.getPortfolio());
 		}
 		if (!Strings.isNullOrEmpty(source.getInstrument())) {
-			target.put("instrument", source.getPortfolio());
+			target.put("instrument", source.getInstrument());
 		}
 		if (source.getIntent() != null) {
 			target.put("intent", source.getIntent().name());
+		}
+		if (source.getStatus() != null) {
+			target.put("status", source.getStatus().name());
 		}
 		if (!Strings.isNullOrEmpty(source.getExternalIdentifier())) {
 			target.put("externalIdentifier", source.getExternalIdentifier());

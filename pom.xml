@@ -671,9 +671,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/e2e/**</exclude>
                         <exclude>**/*Server.class</exclude>
-                        <exclude>**/*Broker.class</exclude>
                         <exclude>**/*Configuration.class</exclude>
                         <exclude>**/model/*.class</exclude>
                         <exclude>**/shared/*.class</exclude>
@@ -685,12 +683,12 @@
                                 <limit implementation="org.jacoco.report.check.Limit">
                                     <counter>INSTRUCTION</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.20</minimum>
+                                    <minimum>0.4</minimum>
                                 </limit>
                                 <limit implementation="org.jacoco.report.check.Limit">
                                     <counter>CLASS</counter>
                                     <value>MISSEDCOUNT</value>
-                                    <maximum>20</maximum>
+                                    <maximum>5</maximum>
                                 </limit>
                             </limits>
                         </rule>

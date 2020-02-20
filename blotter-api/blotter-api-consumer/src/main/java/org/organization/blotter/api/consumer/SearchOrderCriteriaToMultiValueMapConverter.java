@@ -28,6 +28,9 @@ public class SearchOrderCriteriaToMultiValueMapConverter implements Converter<Se
 		if (source.getIntent() != null) {
 			target.add("intent", String.format("{%s}", "intent"));
 		}
+		if (source.getStatus() != null) {
+			target.add("status", String.format("{%s}", "status"));
+		}
 		if (!Strings.isNullOrEmpty(source.getExternalIdentifier())) {
 			target.add("externalIdentifier", String.format("{%s}", "externalIdentifier"));
 		}
