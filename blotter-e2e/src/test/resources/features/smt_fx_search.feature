@@ -13,7 +13,7 @@ Feature: fx search
       | stex-ingestion-external-identifier-500 | mathieu | PF-000000003 | 400000 | LU15000000 | sell   | placed |
 
     When alban searches for orders by criteria
-      | portfolio    | metaType |
+      | portfolios    | metaTypes |
       | PF-000000003 | fx       |
 
     Then within PT5S, the below orders should be found

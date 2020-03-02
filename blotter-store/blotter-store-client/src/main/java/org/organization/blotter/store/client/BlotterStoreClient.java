@@ -70,17 +70,19 @@ public class BlotterStoreClient {
 				.flatMap(Collection::stream) //
 				.collect(Collectors.toList());
 		final CriteriaQuery<NormalizedOrder> fullQuery = query.select(from).where(predicates.toArray(new Predicate[]{}));
-		return entityManager.createQuery(fullQuery).getResultList().stream().map(record -> OrderReadDto.builder() //
-				.amount(Float.valueOf(record.getAmount())) //
-				.author(record.getAuthor()) //
-				.externalIdentifier(record.getExternalIdentifier()) //
-				.instrument(record.getInstrument()) //
-				.intent(record.getIntent()) //
-				.metaType(record.getMetaType()) //
-				.portfolio(record.getPortfolio()) //
-				.status(record.getStatus()) //
-				.timestamp(record.getTimestamp()) //
-				.build()) //
+		final List<NormalizedOrder> results = entityManager.createQuery(fullQuery).getResultList();
+		return results.stream() //
+				.map(record -> OrderReadDto.builder() //
+						.amount(Float.valueOf(record.getAmount())) //
+						.author(record.getAuthor()) //
+						.externalIdentifier(record.getExternalIdentifier()) //
+						.instrument(record.getInstrument()) //
+						.intent(record.getIntent()) //
+						.metaType(record.getMetaType()) //
+						.portfolio(record.getPortfolio()) //
+						.status(record.getStatus()) //
+						.timestamp(record.getTimestamp()) //
+						.build()) //
 				.filter(Objects::nonNull) //
 				.sorted(Comparator.comparing(OrderReadDto::getTimestamp)) //
 				.collect(Collectors.toList());

@@ -11,7 +11,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
+@EqualsAndHashCode(of = {"portfolios", "instruments", "timestamp", "metaTypes", "intents"})
 public class SearchOrderCriteria {
 	private String externalIdentifiers;
 	private String metaTypes;
