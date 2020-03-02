@@ -26,13 +26,13 @@ public class SearchOrderCriteriaToMultiValueMapConverterTest {
 	public void convert_ok() {
 		// Given
 		final SearchOrderCriteria criteria = SearchOrderCriteria.builder() //
-				.metaType(MetaType.stex) //
-				.author("any-author") //
-				.portfolio("any-portfolio") //
-				.instrument("any-instrument") //
-				.intent(TradeIntent.buy) //
-				.externalIdentifier("any-ext-id") //
-				.status(OrderStatus.validated) //
+				.metaTypes("stex") //
+				.authors("any-author") //
+				.portfolios("any-portfolio") //
+				.instruments("any-instrument") //
+				.intents("buy") //
+				.externalIdentifiers("any-ext-id") //
+				.statuses("validated") //
 				.build();
 
 		// When
@@ -40,13 +40,13 @@ public class SearchOrderCriteriaToMultiValueMapConverterTest {
 
 		// Then
 		final MultiValueMap<String, String> expected = new LinkedMultiValueMap<>();
-		expected.add("metaType", String.format("{%s}", "metaType"));
-		expected.add("author", String.format("{%s}", "author"));
-		expected.add("portfolio", String.format("{%s}", "portfolio"));
-		expected.add("instrument", String.format("{%s}", "instrument"));
-		expected.add("intent", String.format("{%s}", "intent"));
-		expected.add("status", String.format("{%s}", "status"));
-		expected.add("externalIdentifier", String.format("{%s}", "externalIdentifier"));
+		expected.add("metaTypes", String.format("{%s}", "metaTypes"));
+		expected.add("authors", String.format("{%s}", "authors"));
+		expected.add("portfolios", String.format("{%s}", "portfolios"));
+		expected.add("instruments", String.format("{%s}", "instruments"));
+		expected.add("intents", String.format("{%s}", "intents"));
+		expected.add("statuses", String.format("{%s}", "statuses"));
+		expected.add("externalIdentifiers", String.format("{%s}", "externalIdentifiers"));
 		assertEquals(expected, actual);
 	}
 }

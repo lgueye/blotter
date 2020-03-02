@@ -1,9 +1,6 @@
 package org.organization.blotter.api.model;
 
 import lombok.*;
-import org.organization.blotter.shared.model.MetaType;
-import org.organization.blotter.shared.model.OrderStatus;
-import org.organization.blotter.shared.model.TradeIntent;
 
 import java.time.Instant;
 
@@ -16,13 +13,13 @@ import java.time.Instant;
 @Builder
 @EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
 public class SearchOrderCriteria {
-	private String externalIdentifier;
-	private MetaType metaType;
-	private String author;
-	private String portfolio;
+	private String externalIdentifiers;
+	private String metaTypes;
+	private String authors;
+	private String portfolios;
 	private Float amount;
-	private TradeIntent intent;
-	private String instrument;
-	private OrderStatus status;
+	private String intents;
+	private String instruments;
+	private String statuses;
 	private Instant timestamp;
 }

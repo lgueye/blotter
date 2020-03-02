@@ -13,26 +13,26 @@ public class SearchOrderCriteriaToMultiValueMapConverter implements Converter<Se
 	@Override
 	public MultiValueMap<String, String> convert(final SearchOrderCriteria source) {
 		final MultiValueMap<String, String> target = new LinkedMultiValueMap<>();
-		if (source.getMetaType() != null) {
-			target.add("metaType", String.format("{%s}", "metaType"));
+		if (!Strings.isNullOrEmpty(source.getMetaTypes())) {
+			target.add("metaTypes", String.format("{%s}", "metaTypes"));
 		}
-		if (!Strings.isNullOrEmpty(source.getAuthor())) {
-			target.add("author", String.format("{%s}", "author"));
+		if (!Strings.isNullOrEmpty(source.getAuthors())) {
+			target.add("authors", String.format("{%s}", "authors"));
 		}
-		if (!Strings.isNullOrEmpty(source.getPortfolio())) {
-			target.add("portfolio", String.format("{%s}", "portfolio"));
+		if (!Strings.isNullOrEmpty(source.getPortfolios())) {
+			target.add("portfolios", String.format("{%s}", "portfolios"));
 		}
-		if (!Strings.isNullOrEmpty(source.getInstrument())) {
-			target.add("instrument", String.format("{%s}", "instrument"));
+		if (!Strings.isNullOrEmpty(source.getInstruments())) {
+			target.add("instruments", String.format("{%s}", "instruments"));
 		}
-		if (source.getIntent() != null) {
-			target.add("intent", String.format("{%s}", "intent"));
+		if (!Strings.isNullOrEmpty(source.getIntents())) {
+			target.add("intents", String.format("{%s}", "intents"));
 		}
-		if (source.getStatus() != null) {
-			target.add("status", String.format("{%s}", "status"));
+		if (!Strings.isNullOrEmpty(source.getStatuses())) {
+			target.add("statuses", String.format("{%s}", "statuses"));
 		}
-		if (!Strings.isNullOrEmpty(source.getExternalIdentifier())) {
-			target.add("externalIdentifier", String.format("{%s}", "externalIdentifier"));
+		if (!Strings.isNullOrEmpty(source.getExternalIdentifiers())) {
+			target.add("externalIdentifiers", String.format("{%s}", "externalIdentifiers"));
 		}
 		return target;
 	}

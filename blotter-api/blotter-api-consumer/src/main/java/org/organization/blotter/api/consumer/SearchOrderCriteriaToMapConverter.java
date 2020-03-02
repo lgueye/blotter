@@ -14,26 +14,26 @@ public class SearchOrderCriteriaToMapConverter implements Converter<SearchOrderC
 	@Override
 	public Map<String, String> convert(final SearchOrderCriteria source) {
 		final Map<String, String> target = Maps.newHashMap();
-		if (source.getMetaType() != null) {
-			target.put("metaType", source.getMetaType().name());
+		if (!Strings.isNullOrEmpty(source.getMetaTypes())) {
+			target.put("metaTypes", source.getMetaTypes());
 		}
-		if (!Strings.isNullOrEmpty(source.getAuthor())) {
-			target.put("author", source.getAuthor());
+		if (!Strings.isNullOrEmpty(source.getAuthors())) {
+			target.put("authors", source.getAuthors());
 		}
-		if (!Strings.isNullOrEmpty(source.getPortfolio())) {
-			target.put("portfolio", source.getPortfolio());
+		if (!Strings.isNullOrEmpty(source.getPortfolios())) {
+			target.put("portfolios", source.getPortfolios());
 		}
-		if (!Strings.isNullOrEmpty(source.getInstrument())) {
-			target.put("instrument", source.getInstrument());
+		if (!Strings.isNullOrEmpty(source.getInstruments())) {
+			target.put("instruments", source.getInstruments());
 		}
-		if (source.getIntent() != null) {
-			target.put("intent", source.getIntent().name());
+		if (!Strings.isNullOrEmpty(source.getIntents())) {
+			target.put("intents", source.getIntents());
 		}
-		if (source.getStatus() != null) {
-			target.put("status", source.getStatus().name());
+		if (!Strings.isNullOrEmpty(source.getStatuses())) {
+			target.put("statuses", source.getStatuses());
 		}
-		if (!Strings.isNullOrEmpty(source.getExternalIdentifier())) {
-			target.put("externalIdentifier", source.getExternalIdentifier());
+		if (!Strings.isNullOrEmpty(source.getExternalIdentifiers())) {
+			target.put("externalIdentifiers", source.getExternalIdentifiers());
 		}
 		return target;
 	}

@@ -50,32 +50,32 @@ public class BlotterApiConsumerTest {
 	public void findByCriteria() {
 		// Given
 		final SearchOrderCriteria criteria = SearchOrderCriteria.builder() //
-				.metaType(MetaType.stex) //
-				.author("any-author") //
-				.portfolio("any-portfolio") //
-				.instrument("any-instrument") //
-				.intent(TradeIntent.buy) //
-				.externalIdentifier("any-ext-id") //
-				.status(OrderStatus.validated) //
+				.metaTypes("stex") //
+				.authors("any-author") //
+				.portfolios("any-portfolio") //
+				.instruments("any-instrument") //
+				.intents("buy") //
+				.externalIdentifiers("any-ext-id") //
+				.statuses("validated") //
 				.build();
 
 		final Map<String, String> paramValues = Maps.newHashMap();
-		paramValues.put("metaType", MetaType.stex.name());
-		paramValues.put("author", "any-author");
-		paramValues.put("portfolio", "any-portfolio");
-		paramValues.put("instrument", "any-instrument");
-		paramValues.put("intent", TradeIntent.buy.name());
-		paramValues.put("status", OrderStatus.validated.name());
-		paramValues.put("externalIdentifier", "any-ext-id");
+		paramValues.put("metaTypes", MetaType.stex.name());
+		paramValues.put("authors", "any-author");
+		paramValues.put("portfolios", "any-portfolio");
+		paramValues.put("instruments", "any-instrument");
+		paramValues.put("intents", TradeIntent.buy.name());
+		paramValues.put("statuses", OrderStatus.validated.name());
+		paramValues.put("externalIdentifiers", "any-ext-id");
 
 		final MultiValueMap<String, String> paramTemplates = new LinkedMultiValueMap<>();
-		paramTemplates.add("metaType", String.format("{%s}", "metaType"));
-		paramTemplates.add("author", String.format("{%s}", "author"));
-		paramTemplates.add("portfolio", String.format("{%s}", "portfolio"));
-		paramTemplates.add("instrument", String.format("{%s}", "instrument"));
-		paramTemplates.add("intent", String.format("{%s}", "intent"));
-		paramTemplates.add("status", String.format("{%s}", "status"));
-		paramTemplates.add("externalIdentifier", String.format("{%s}", "externalIdentifier"));
+		paramTemplates.add("metaTypes", String.format("{%s}", "metaTypes"));
+		paramTemplates.add("authors", String.format("{%s}", "authors"));
+		paramTemplates.add("portfolios", String.format("{%s}", "portfolios"));
+		paramTemplates.add("instruments", String.format("{%s}", "instruments"));
+		paramTemplates.add("intents", String.format("{%s}", "intents"));
+		paramTemplates.add("statuses", String.format("{%s}", "statuses"));
+		paramTemplates.add("externalIdentifiers", String.format("{%s}", "externalIdentifiers"));
 
 		final URI uri = UriComponentsBuilder //
 				.fromHttpUrl(apiUrl + "/api/v1/orders") //

@@ -27,13 +27,13 @@ public class SearchOrderCriteriaToMapConverterTest {
 	public void convert_ok() {
 		// Given
 		final SearchOrderCriteria criteria = SearchOrderCriteria.builder() //
-				.metaType(MetaType.stex) //
-				.author("any-author") //
-				.portfolio("any-portfolio") //
-				.instrument("any-instrument") //
-				.intent(TradeIntent.buy) //
-				.externalIdentifier("any-ext-id") //
-				.status(OrderStatus.validated) //
+				.metaTypes("stex") //
+				.authors("any-author") //
+				.portfolios("any-portfolio") //
+				.instruments("any-instrument") //
+				.intents("buy") //
+				.externalIdentifiers("any-ext-id") //
+				.statuses("validated") //
 				.build();
 
 		// When
@@ -41,13 +41,13 @@ public class SearchOrderCriteriaToMapConverterTest {
 
 		// Then
 		final Map<String, String> expected = Maps.newHashMap();
-		expected.put("metaType", MetaType.stex.name());
-		expected.put("author", "any-author");
-		expected.put("portfolio", "any-portfolio");
-		expected.put("instrument", "any-instrument");
-		expected.put("intent", TradeIntent.buy.name());
-		expected.put("status", OrderStatus.validated.name());
-		expected.put("externalIdentifier", "any-ext-id");
+		expected.put("metaTypes", MetaType.stex.name());
+		expected.put("authors", "any-author");
+		expected.put("portfolios", "any-portfolio");
+		expected.put("instruments", "any-instrument");
+		expected.put("intents", TradeIntent.buy.name());
+		expected.put("statuses", OrderStatus.validated.name());
+		expected.put("externalIdentifiers", "any-ext-id");
 		assertEquals(expected, actual);
 
 	}

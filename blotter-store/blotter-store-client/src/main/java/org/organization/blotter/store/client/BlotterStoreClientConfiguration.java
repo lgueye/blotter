@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManager;
+import java.util.List;
+
 /**
  * @author louis.gueye@gmail.com
  */
@@ -18,7 +21,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class BlotterStoreClientConfiguration {
 
 	@Bean
-	public BlotterStoreClient blotterStoreClient(final NormalizedOrderRepository repository) {
-		return new BlotterStoreClient(repository);
+	public PortfoliosCriteriaToPredicateProducer portfoliosCriteriaToPredicateProducer() {
+		return new PortfoliosCriteriaToPredicateProducer();
+	}
+
+	@Bean
+	public MetaTypesCriteriaToPredicateProducer metaTypesCriteriaToPredicateProducer() {
+		return new MetaTypesCriteriaToPredicateProducer();
+	}
+
+	@Bean
+	public BlotterStoreClient blotterStoreClient(final NormalizedOrderRepository repository, final EntityManager entityManager,
+			final List<CriterionToPredicateProducer> predicatesProducers) {
+		return new BlotterStoreClient(repository, entityManager, predicatesProducers);
 	}
 }
