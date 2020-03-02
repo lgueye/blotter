@@ -87,23 +87,6 @@ public class BlotterStoreClient {
 				.sorted(Comparator.comparing(OrderReadDto::getTimestamp)) //
 				.collect(Collectors.toList());
 
-		// final NormalizedOrder example = NormalizedOrder.builder().metaType(criteria.getMetaType()).portfolio(criteria.getPortfolio()).build();
-		// return repository.findAll(Example.of(example)) //
-		// .stream() //
-		// .map(record -> OrderReadDto.builder() //
-		// .amount(Float.valueOf(record.getAmount())) //
-		// .author(record.getAuthor()) //
-		// .externalIdentifier(record.getExternalIdentifier()) //
-		// .instrument(record.getInstrument()) //
-		// .intent(record.getIntent()) //
-		// .metaType(record.getMetaType()) //
-		// .portfolio(record.getPortfolio()) //
-		// .status(record.getStatus()) //
-		// .timestamp(record.getTimestamp()) //
-		// .build()) //
-		// .filter(Objects::nonNull) //
-		// .sorted(Comparator.comparing(OrderReadDto::getTimestamp)) //
-		// .collect(Collectors.toList());
 	}
 
 }
