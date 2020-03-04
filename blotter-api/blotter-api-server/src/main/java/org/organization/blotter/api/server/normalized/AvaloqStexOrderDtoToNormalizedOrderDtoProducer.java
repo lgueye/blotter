@@ -3,6 +3,7 @@ package org.organization.blotter.api.server.normalized;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
+import or.organization.blotter.broker.model.SourceQueues;
 import or.organization.blotter.broker.model.avaloq.AvaloqStexOrderDto;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.broker.consumer.ProcessingContext;
@@ -22,6 +23,9 @@ public class AvaloqStexOrderDtoToNormalizedOrderDtoProducer implements Normalize
 
 	@Override
 	public boolean accept(final ProcessingContext context) {
+		if (context == null || !SourceQueues.AVALOQ.equals(context.getSource())) {
+			return false;
+		}
 		try {
 			AvaloqStexOrderDto order = objectMapper.readValue(context.getMessage(), AvaloqStexOrderDto.class);
 			if (order == null) {

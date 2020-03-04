@@ -13,7 +13,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent"})
 public class OrderNotificationDto {
 	private String id;

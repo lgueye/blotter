@@ -10,7 +10,6 @@ import org.organization.blotter.notification.producer.BlotterNotificationProduce
 import org.organization.blotter.store.client.BlotterStoreClient;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -34,18 +33,12 @@ public class NormalizationProcessor implements IncomingMessageProcessor {
 				.collect(Collectors.toList());// produce normalized order
 		log.info("Produced {} normalized orders from context {}", orders.size(), context);
 		orders.forEach(order -> {
-			persistenceService.save(order);
+			final String id = persistenceService.save(order);
 			log.info("Persisted order {}", order);
-		});// persist normalized order
-
-		orders.stream().map(order -> {
 			final OrderNotificationDto notification = orderNotificationProducer.convert(order);
-			log.info("produced notification {} from order {}", notification, order);
-			return notification;
-		}) // produce notification order
-				.filter(Objects::nonNull).forEach(notification -> {
-					orderNotificationService.send(notification);
-					log.info("Sent notification {} to notification broker", notification);
-				}); // notify notification order consumers
+			log.info("Produced notification {} from order {}", notification, order);
+			orderNotificationService.send(notification.toBuilder().id(id).build());
+			log.info("Sent notification {} to notification broker", notification);
+		});
 	}
 }

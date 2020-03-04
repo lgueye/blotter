@@ -3,6 +3,7 @@ package org.organization.blotter.api.server.normalized;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
+import or.organization.blotter.broker.model.SourceQueues;
 import or.organization.blotter.broker.model.smarttrade.SmartTradeFxOrderDto;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.broker.consumer.ProcessingContext;
@@ -22,6 +23,9 @@ public class SmartTradeFxOrderDtoToNormalizedOrderDtoProducer implements Normali
 
 	@Override
 	public boolean accept(final ProcessingContext context) {
+		if (context == null || !SourceQueues.SMART_TRADE.equals(context.getSource())) {
+			return false;
+		}
 		try {
 			SmartTradeFxOrderDto order = objectMapper.readValue(context.getMessage(), SmartTradeFxOrderDto.class);
 			if (order == null) {

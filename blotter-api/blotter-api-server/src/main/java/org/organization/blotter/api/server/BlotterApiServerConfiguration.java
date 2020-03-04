@@ -31,6 +31,11 @@ public class BlotterApiServerConfiguration {
 	}
 
 	@Bean
+	public SmartTradeFxOrderDtoToNormalizedOrderDtoProducer smartTradeFxOrderDtoToNormalizedOrderDtoProducer(final ObjectMapper objectMapper) {
+		return new SmartTradeFxOrderDtoToNormalizedOrderDtoProducer(objectMapper);
+	}
+
+	@Bean
 	public OrderNotificationDtoProducer orderNotificationDtoProducer() {
 		return new OrderNotificationDtoProducer();
 	}

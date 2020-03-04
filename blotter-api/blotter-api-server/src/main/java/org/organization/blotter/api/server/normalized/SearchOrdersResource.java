@@ -19,11 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class SearchOrdersResource {
-	private final BlotterStoreClient persistenceService;
+	private final BlotterStoreClient service;
 
 	@GetMapping
 	public List<OrderReadDto> findByCriteria(final SearchOrderCriteria criteria) {
-		return persistenceService.findByCriteria(criteria);
+		return service.findByCriteria(criteria);
 	}
 
 }

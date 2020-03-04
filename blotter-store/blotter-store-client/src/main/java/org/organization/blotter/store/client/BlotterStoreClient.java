@@ -26,7 +26,7 @@ public class BlotterStoreClient {
 	private final EntityManager entityManager;
 	private final List<CriterionToPredicateProducer> predicateProducers;
 
-	public void save(NormalizedOrderDto dto) {
+	public String save(NormalizedOrderDto dto) {
 		final NormalizedOrder order = NormalizedOrder.builder() //
 				.amount(dto.getAmount().toString()) //
 				.author(dto.getAuthor()) //
@@ -51,9 +51,12 @@ public class BlotterStoreClient {
 		final Optional<NormalizedOrder> persistedOptional = repository.findOne(Example.of(example));
 		if (!persistedOptional.isPresent()) {
 			repository.save(order);
+			return order.getId();
 		} else {
 			// TODO : merge
-			repository.save(order.toBuilder().id(persistedOptional.get().getId()).build());
+			final String id = persistedOptional.get().getId();
+			repository.save(order.toBuilder().id(id).build());
+			return id;
 		}
 	}
 
