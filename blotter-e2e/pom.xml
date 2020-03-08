@@ -23,15 +23,16 @@
         <blotter.notification.server.http.port>9201</blotter.notification.server.http.port>
         <blotter.notification.server.port>9200</blotter.notification.server.port>
         <blotter.notification.server.url>localhost:${blotter.notification.server.port}</blotter.notification.server.url>
-        <blotter.store.client.driver>com.mysql.cj.jdbc.Driver</blotter.store.client.driver>
-        <blotter.store.server.base-dir>/tmp</blotter.store.server.base-dir>
+        <blotter.store.client.driver>org.h2.Driver</blotter.store.client.driver>
+        <blotter.store.server.base-dir>${java.io.tmpdir}</blotter.store.server.base-dir>
+        <blotter.store.server.dbname>${blotter.store.server.schema}</blotter.store.server.dbname>
         <blotter.store.server.debug.port>9002</blotter.store.server.debug.port>
         <blotter.store.server.http.health.url>http://localhost:${blotter.store.server.http.port}/actuator/health</blotter.store.server.http.health.url>
         <blotter.store.server.http.port>9001</blotter.store.server.http.port>
         <blotter.store.server.password>secret</blotter.store.server.password>
         <blotter.store.server.port>9000</blotter.store.server.port>
         <blotter.store.server.schema>blotter</blotter.store.server.schema>
-        <blotter.store.server.url>jdbc:mysql://localhost:${blotter.store.server.port}/${blotter.store.server.schema}?autoReconnect=true</blotter.store.server.url>
+        <blotter.store.server.url>jdbc:h2:tcp://localhost:${blotter.store.server.port}/${blotter.store.server.base-dir}/${blotter.store.server.dbname};DATABASE_TO_UPPER=FALSE;INIT=SET SCHEMA ${blotter.store.server.schema}</blotter.store.server.url>
         <blotter.store.server.user>blotter_user</blotter.store.server.user>
         <logging.level>INFO</logging.level>
         <spring.datasource.driver-class-name>${blotter.store.client.driver}</spring.datasource.driver-class-name>
@@ -65,8 +66,8 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -133,9 +134,9 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql-connector-java.version}</version>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.organization.blotter</groupId>
@@ -195,6 +196,14 @@
                                     <value>${blotter.store.server.password}</value>
                                 </property>
                                 <property>
+                                    <name>blotter.store.server.schema</name>
+                                    <value>${blotter.store.server.schema}</value>
+                                </property>
+                                <property>
+                                    <name>blotter.store.client.driver</name>
+                                    <value>${blotter.store.client.driver}</value>
+                                </property>
+                                <property>
                                     <name>spring.kafka.bootstrap-servers</name>
                                     <value>${blotter.notification.server.url}</value>
                                 </property>
@@ -226,7 +235,7 @@
                                 <argument>${user.home}/.m2/repository/org/organization/blotter/blotter-store-server/${project.parent.version}/blotter-store-server-${project.parent.version}.jar</argument>
                                 <argument>--server.port=${blotter.store.server.http.port}</argument>
                                 <argument>--blotter.store.server.port=${blotter.store.server.port}</argument>
-                                <argument>--blotter.store.server.schema=${blotter.store.server.schema}</argument>
+                                <argument>--blotter.store.server.base-dir=${blotter.store.server.base-dir}</argument>
                                 <argument>--blotter.store.server.user=${blotter.store.server.user}</argument>
                                 <argument>--blotter.store.server.password=${blotter.store.server.password}</argument>
                                 <argument>--logging.level.org.organization=${logging.level}</argument>
@@ -303,7 +312,7 @@
                                 <argument>--spring.datasource.driver-class-name=${spring.datasource.driver-class-name}</argument>
                                 <argument>--spring.datasource.username=${spring.datasource.username}</argument>
                                 <argument>--spring.datasource.password=${spring.datasource.password}</argument>
-                                <argument>--spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect</argument>
+                                <argument>--spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect</argument>
                                 <argument>--spring.jpa.show-sql=false</argument>
                                 <argument>--spring.jpa.open-in-view=false</argument>
                                 <argument>--spring.jpa.hibernate.ddl-auto=validate</argument>
@@ -314,6 +323,34 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>${sql-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>create-user-schema</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:h2:tcp://localhost:${blotter.store.server.port}/${blotter.store.server.base-dir}/${blotter.store.server.dbname};DATABASE_TO_UPPER=false;USER=${blotter.store.server.user};PASSWORD=${blotter.store.server.password}</url>
+                            <driver>${blotter.store.client.driver}</driver>
+                            <username>${blotter.store.server.user}</username>
+                            <password>${blotter.store.server.password}</password>
+                            <sqlCommand>CREATE SCHEMA IF NOT EXISTS ${blotter.store.server.schema} AUTHORIZATION ${blotter.store.server.user};</sqlCommand>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

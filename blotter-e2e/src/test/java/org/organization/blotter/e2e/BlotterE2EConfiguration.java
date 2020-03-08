@@ -22,17 +22,18 @@ public class BlotterE2EConfiguration {
 
 	@Bean
 	public DataSource dataSource(@Value("${blotter.store.server.url}") final String url,
-			@Value("${blotter.store.server.user}") final String username, @Value("${blotter.store.server.password}") final String password) {
+			@Value("${blotter.store.server.user}") final String username, @Value("${blotter.store.server.password}") final String password,
+			@Value("${blotter.store.server.schema}") final String schema, @Value("${blotter.store.client.driver}") final String driverClassName) {
 		final HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setJdbcUrl(url);
 		hikariConfig.setUsername(username);
 		hikariConfig.setPassword(password);
 		hikariConfig.setPoolName("e2e-hikari");
 		hikariConfig.setConnectionTestQuery("select 1");
-		hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		hikariConfig.setDriverClassName(driverClassName);
 		hikariConfig.setMinimumIdle(2);
 		hikariConfig.setMaximumPoolSize(10);
-		hikariConfig.setSchema("blotter");
+		hikariConfig.setSchema(schema);
 		return new HikariDataSource(hikariConfig);
 	}
 }
