@@ -47,7 +47,7 @@ public class BlotterStoreClientIntegrationTest {
 		// Given
 
 		final SearchOrderCriteria criteria = SearchOrderCriteria.builder().portfolios("pf-001").metaTypes("stex").build();
-		final float amount = 45.6f;
+		final float o1Price = 45.6f;
 		final String o1Author = "any-author";
 		final String details = "{}";
 		final String o1ExternalIdentifier = "ext-id-01";
@@ -62,7 +62,7 @@ public class BlotterStoreClientIntegrationTest {
 		final Instant o1Timestamp = Instant.now();
 		final Instant o2Timestamp = o1Timestamp.plus(Duration.ofSeconds(5));
 		final NormalizedOrder o1 = NormalizedOrder.builder() //
-				.amount(String.valueOf(amount)) //
+				.price(String.valueOf(o1Price)) //
 				.author(o1Author) //
 				.details(details) //
 				.externalIdentifier(o1ExternalIdentifier) //
@@ -75,9 +75,9 @@ public class BlotterStoreClientIntegrationTest {
 				.timestamp(o1Timestamp) //
 				.build();
 		final String o2Author = "louis";
-		final float o2Amount = 88.2f;
+		final float o2Price = 88.2f;
 		final NormalizedOrder o2 = NormalizedOrder.builder() //
-				.amount(String.valueOf(o2Amount)) //
+				.price(String.valueOf(o2Price)) //
 				.author(o2Author) //
 				.details(details) //
 				.externalIdentifier(o2ExternalIdentifier) //
@@ -94,7 +94,7 @@ public class BlotterStoreClientIntegrationTest {
 		final List<OrderReadDto> actual = underTest.findByCriteria(criteria);
 
 		final OrderReadDto r1 = OrderReadDto.builder() //
-				.amount(amount) //
+				.price(o1Price) //
 				.author(o1Author) //
 				.externalIdentifier(o1ExternalIdentifier) //
 				.instrument(instrument) //
@@ -105,7 +105,7 @@ public class BlotterStoreClientIntegrationTest {
 				.timestamp(o1Timestamp) //
 				.build();
 		final OrderReadDto r2 = OrderReadDto.builder() //
-				.amount(o2Amount) //
+				.price(o2Price) //
 				.author(o2Author) //
 				.externalIdentifier(o2ExternalIdentifier) //
 				.instrument(instrument) //

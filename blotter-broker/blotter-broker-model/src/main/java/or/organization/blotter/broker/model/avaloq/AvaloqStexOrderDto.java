@@ -20,7 +20,7 @@ public class AvaloqStexOrderDto {
 	private MetaType metaType = MetaType.stex;
 	private String author;
 	private String portfolio;
-	private Float amount;
+	private Float price;
 	private TradeIntent intent;
 	private String instrument;
 	private OrderStatus status;

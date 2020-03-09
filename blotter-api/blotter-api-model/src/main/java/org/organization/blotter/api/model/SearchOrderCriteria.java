@@ -17,7 +17,7 @@ public class SearchOrderCriteria {
 	private String metaTypes;
 	private String authors;
 	private String portfolios;
-	private Float amount;
+	private String price;
 	private String intents;
 	private String instruments;
 	private String statuses;

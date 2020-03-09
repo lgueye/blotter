@@ -20,7 +20,7 @@ public class OrderReadDto {
 	private MetaType metaType;
 	private String author;
 	private String portfolio;
-	private Float amount;
+	private Float price;
 	private TradeIntent intent;
 	private String instrument;
 	private OrderStatus status;

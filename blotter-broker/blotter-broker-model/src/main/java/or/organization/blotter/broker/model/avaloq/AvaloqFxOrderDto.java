@@ -20,7 +20,7 @@ public class AvaloqFxOrderDto {
 	private MetaType metaType = MetaType.fx;
 	private String author;
 	private String portfolio;
-	private Float amount;
+	private Float price;
 	private TradeIntent intent;
 	private String instrument;
 	private OrderStatus status;

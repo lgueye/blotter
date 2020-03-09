@@ -44,7 +44,7 @@ public class AvaloqStexOrderDtoToNormalizedOrderDtoProducer implements Normalize
 		try {
 			AvaloqStexOrderDto order = objectMapper.readValue(context.getMessage(), AvaloqStexOrderDto.class);
 			return NormalizedOrderDto.builder() //
-					.amount(order.getAmount()) //
+					.price(order.getPrice()) //
 					.author(order.getAuthor()) //
 					.externalIdentifier(order.getExternalIdentifier()) //
 					.instrument(order.getInstrument()) //

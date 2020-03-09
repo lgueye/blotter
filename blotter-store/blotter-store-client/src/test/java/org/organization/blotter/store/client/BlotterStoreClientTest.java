@@ -45,7 +45,7 @@ public class BlotterStoreClientTest {
 	@Test
 	public void save_ok() {
 		// Given
-		final float amount = 45.6f;
+		final float price = 45.6f;
 		final String author = "any-author";
 		final String details = "{}";
 		final String externalIdentifier = "ext-id";
@@ -57,7 +57,7 @@ public class BlotterStoreClientTest {
 		final OrderStatus status = OrderStatus.validated;
 		final Instant now = Instant.now();
 		final NormalizedOrderDto dto = NormalizedOrderDto.builder() //
-				.amount(amount) //
+				.price(price) //
 				.author(author) //
 				.details(details) //
 				.externalIdentifier(externalIdentifier) //
@@ -79,7 +79,7 @@ public class BlotterStoreClientTest {
 		// Then
 		verify(repository).save(argumentCaptor.capture());
 		final NormalizedOrder captured = argumentCaptor.getValue();
-		assertEquals(amount, Float.valueOf(captured.getAmount()));
+		assertEquals(price, Float.valueOf(captured.getPrice()));
 		assertEquals(author, captured.getAuthor());
 		assertEquals(details, captured.getDetails());
 		assertEquals(externalIdentifier, captured.getExternalIdentifier());
@@ -95,7 +95,7 @@ public class BlotterStoreClientTest {
 	@Test
 	public void update_ok() {
 		// Given
-		final float amount = 45.6f;
+		final float price = 45.6f;
 		final String author = "any-author";
 		final String details = "{}";
 		final String externalIdentifier = "ext-id";
@@ -107,7 +107,7 @@ public class BlotterStoreClientTest {
 		final OrderStatus status = OrderStatus.validated;
 		final Instant now = Instant.now();
 		final NormalizedOrderDto dto = NormalizedOrderDto.builder() //
-				.amount(amount) //
+				.price(price) //
 				.author(author) //
 				.details(details) //
 				.externalIdentifier(externalIdentifier) //
@@ -129,7 +129,7 @@ public class BlotterStoreClientTest {
 		// Then
 		verify(repository).save(argumentCaptor.capture());
 		final NormalizedOrder captured = argumentCaptor.getValue();
-		assertEquals(amount, Float.valueOf(captured.getAmount()));
+		assertEquals(price, Float.valueOf(captured.getPrice()));
 		assertEquals(author, captured.getAuthor());
 		assertEquals(details, captured.getDetails());
 		assertEquals(externalIdentifier, captured.getExternalIdentifier());

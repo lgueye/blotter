@@ -44,7 +44,7 @@ public class AvaloqFxOrderDtoToNormalizedOrderDtoProducer implements NormalizedO
 		try {
 			AvaloqFxOrderDto order = objectMapper.readValue(context.getMessage(), AvaloqFxOrderDto.class);
 			return NormalizedOrderDto.builder() //
-					.amount(order.getAmount()) //
+					.price(order.getPrice()) //
 					.author(order.getAuthor()) //
 					.externalIdentifier(order.getExternalIdentifier()) //
 					.instrument(order.getInstrument()) //

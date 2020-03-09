@@ -11,7 +11,7 @@ public class OrderNotificationDtoProducer implements Converter<NormalizedOrderDt
 	@Override
 	public OrderNotificationDto convert(final NormalizedOrderDto normalizedOrderDto) {
 		return OrderNotificationDto.builder() //
-				.amount(normalizedOrderDto.getAmount()) //
+				.price(normalizedOrderDto.getPrice()) //
 				.author(normalizedOrderDto.getAuthor()) //
 				.externalIdentifier(normalizedOrderDto.getExternalIdentifier()) //
 				.id(normalizedOrderDto.getId()) //

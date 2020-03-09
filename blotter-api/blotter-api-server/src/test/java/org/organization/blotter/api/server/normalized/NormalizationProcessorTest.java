@@ -66,7 +66,7 @@ public class NormalizationProcessorTest {
 		final String instrument = "LUAXXXXXXX";
 		final String externalIdentifier = "ext-id";
 		final String author = "louis";
-		final float amount = 450000.00f;
+		final float price = 450000.00f;
 		final SmartTradeFxOrderDto dto = SmartTradeFxOrderDto.builder() //
 				.metaType(metaType) //
 				.timestamp(now) //
@@ -76,7 +76,7 @@ public class NormalizationProcessorTest {
 				.instrument(instrument) //
 				.externalIdentifier(externalIdentifier) //
 				.author(author) //
-				.amount(amount) //
+				.price(price) //
 				.build();
 		final ProcessingContext context = ProcessingContext.builder().message(objectMapper.writeValueAsString(dto)).source(SourceQueues.SMART_TRADE)
 				.timestamp(now).build();
@@ -99,7 +99,7 @@ public class NormalizationProcessorTest {
 		assertEquals(instrument, capturedNormalizedOrder.getInstrument());
 		assertEquals(externalIdentifier, capturedNormalizedOrder.getExternalIdentifier());
 		assertEquals(author, capturedNormalizedOrder.getAuthor());
-		assertEquals(amount, capturedNormalizedOrder.getAmount());
+		assertEquals(price, capturedNormalizedOrder.getPrice());
 		assertNull(capturedNormalizedOrder.getId());
 		assertNotNull(capturedNormalizedOrder.getDetails());
 
@@ -115,7 +115,7 @@ public class NormalizationProcessorTest {
 		assertEquals(instrument, capturedOrderNotification.getInstrument());
 		assertEquals(externalIdentifier, capturedOrderNotification.getExternalIdentifier());
 		assertEquals(author, capturedOrderNotification.getAuthor());
-		assertEquals(amount, capturedOrderNotification.getAmount());
+		assertEquals(price, capturedOrderNotification.getPrice());
 		assertEquals(id, capturedOrderNotification.getId());
 	}
 

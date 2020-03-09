@@ -54,7 +54,7 @@ public class NormalizedOrder {
 
 	@Column(nullable = false)
 	@NotNull
-	private String amount;
+	private String price;
 
 	@Column(length = 50, nullable = false)
 	@Enumerated(EnumType.STRING)

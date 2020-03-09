@@ -28,7 +28,7 @@ public class BlotterStoreClient {
 
 	public String save(NormalizedOrderDto dto) {
 		final NormalizedOrder order = NormalizedOrder.builder() //
-				.amount(dto.getAmount().toString()) //
+				.price(dto.getPrice().toString()) //
 				.author(dto.getAuthor()) //
 				.details(dto.getDetails()) //
 				.externalIdentifier(dto.getExternalIdentifier()) //
@@ -76,7 +76,7 @@ public class BlotterStoreClient {
 		final List<NormalizedOrder> results = entityManager.createQuery(fullQuery).getResultList();
 		return results.stream() //
 				.map(record -> OrderReadDto.builder() //
-						.amount(Float.valueOf(record.getAmount())) //
+						.price(Float.valueOf(record.getPrice())) //
 						.author(record.getAuthor()) //
 						.externalIdentifier(record.getExternalIdentifier()) //
 						.instrument(record.getInstrument()) //

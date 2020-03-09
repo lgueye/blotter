@@ -35,7 +35,7 @@ public class OrderNotificationDtoProducerTest {
 		final String instrument = "LUAXXXXXXX";
 		final String externalIdentifier = "ext-id";
 		final String author = "louis";
-		final float amount = 450000.00f;
+		final float price = 450000.00f;
 		final String id = UUID.randomUUID().toString();
 		final String details = "{}";
 		final NormalizedOrderDto normalizedOrderDto = NormalizedOrderDto.builder() //
@@ -47,7 +47,7 @@ public class OrderNotificationDtoProducerTest {
 				.instrument(instrument) //
 				.externalIdentifier(externalIdentifier) //
 				.author(author) //
-				.amount(amount) //
+				.price(price) //
 				.id(id) //
 				.details(details).build();
 
@@ -63,7 +63,7 @@ public class OrderNotificationDtoProducerTest {
 		assertEquals(instrument, actual.getInstrument());
 		assertEquals(externalIdentifier, actual.getExternalIdentifier());
 		assertEquals(author, actual.getAuthor());
-		assertEquals(amount, actual.getAmount());
+		assertEquals(price, actual.getPrice());
 		assertEquals(id, actual.getId());
 	}
 }

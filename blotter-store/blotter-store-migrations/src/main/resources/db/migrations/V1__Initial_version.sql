@@ -8,7 +8,7 @@ CREATE TABLE normalized_orders (
   status              VARCHAR(50)   NOT NULL,
   author              VARCHAR(255)  NOT NULL,
   intent              VARCHAR(50)   NOT NULL,
-  amount              VARCHAR(255)  NOT NULL,
+  price              VARCHAR(255)  NOT NULL,
   instrument          VARCHAR(50)   NOT NULL,
   details             VARCHAR(4000) NOT NULL,
   `timestamp`         VARCHAR(255)  NOT NULL,

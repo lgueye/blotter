@@ -43,7 +43,7 @@ public class NormalizedOrderRepositoryTest {
 	@Test
 	public void create_ok() {
 		// Given
-		final NormalizedOrder detached = NormalizedOrder.builder().amount("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
+		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(UUID.randomUUID().toString()).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222")
 				.status(OrderStatus.booked).timestamp(Instant.now()).build();
 
@@ -55,7 +55,7 @@ public class NormalizedOrderRepositoryTest {
 	public void update_ok() {
 		// Given
 		final String id = UUID.randomUUID().toString();
-		final NormalizedOrder detached = NormalizedOrder.builder().amount("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
+		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(id).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222").status(OrderStatus.booked)
 				.timestamp(Instant.now()).build();
 		underTest.save(detached);
@@ -79,7 +79,7 @@ public class NormalizedOrderRepositoryTest {
 	public void delete_ok() {
 		// Given
 		final String id = UUID.randomUUID().toString();
-		final NormalizedOrder detached = NormalizedOrder.builder().amount("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
+		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(id).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222").status(OrderStatus.booked)
 				.timestamp(Instant.now()).build();
 		underTest.save(detached);

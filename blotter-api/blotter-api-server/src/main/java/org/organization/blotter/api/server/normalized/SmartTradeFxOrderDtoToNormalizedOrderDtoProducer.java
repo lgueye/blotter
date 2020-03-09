@@ -44,7 +44,7 @@ public class SmartTradeFxOrderDtoToNormalizedOrderDtoProducer implements Normali
 		try {
 			SmartTradeFxOrderDto order = objectMapper.readValue(context.getMessage(), SmartTradeFxOrderDto.class);
 			return NormalizedOrderDto.builder() //
-					.amount(order.getAmount()) //
+					.price(order.getPrice()) //
 					.author(order.getAuthor()) //
 					.externalIdentifier(order.getExternalIdentifier()) //
 					.instrument(order.getInstrument()) //
