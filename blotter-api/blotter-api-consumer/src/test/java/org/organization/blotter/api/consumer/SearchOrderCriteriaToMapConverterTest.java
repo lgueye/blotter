@@ -34,6 +34,8 @@ public class SearchOrderCriteriaToMapConverterTest {
 				.intents("buy") //
 				.externalIdentifiers("any-ext-id") //
 				.statuses("validated") //
+				.price("[600,800]") //
+				.settlementDate("[2020-03-15T00:00:00.000Z,2020-03-17T00:00:00.000Z]") //
 				.build();
 
 		// When
@@ -48,6 +50,8 @@ public class SearchOrderCriteriaToMapConverterTest {
 		expected.put("intents", TradeIntent.buy.name());
 		expected.put("statuses", OrderStatus.validated.name());
 		expected.put("externalIdentifiers", "any-ext-id");
+		expected.put("price", "[600,800]");
+		expected.put("settlementDate", "[2020-03-15T00:00:00.000Z,2020-03-17T00:00:00.000Z]");
 		assertEquals(expected, actual);
 
 	}

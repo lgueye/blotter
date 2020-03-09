@@ -34,6 +34,12 @@ public class SearchOrderCriteriaToMultiValueMapConverter implements Converter<Se
 		if (!Strings.isNullOrEmpty(source.getExternalIdentifiers())) {
 			target.add("externalIdentifiers", String.format("{%s}", "externalIdentifiers"));
 		}
+		if (!Strings.isNullOrEmpty(source.getPrice())) {
+			target.add("price", String.format("{%s}", "price"));
+		}
+		if (!Strings.isNullOrEmpty(source.getSettlementDate())) {
+			target.add("settlementDate", String.format("{%s}", "settlementDate"));
+		}
 		return target;
 	}
 }

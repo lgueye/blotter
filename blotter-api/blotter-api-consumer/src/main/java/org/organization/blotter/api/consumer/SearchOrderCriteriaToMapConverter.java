@@ -35,6 +35,12 @@ public class SearchOrderCriteriaToMapConverter implements Converter<SearchOrderC
 		if (!Strings.isNullOrEmpty(source.getExternalIdentifiers())) {
 			target.put("externalIdentifiers", source.getExternalIdentifiers());
 		}
+		if (!Strings.isNullOrEmpty(source.getSettlementDate())) {
+			target.put("settlementDate", source.getSettlementDate());
+		}
+		if (!Strings.isNullOrEmpty(source.getPrice())) {
+			target.put("price", source.getPrice());
+		}
 		return target;
 	}
 }

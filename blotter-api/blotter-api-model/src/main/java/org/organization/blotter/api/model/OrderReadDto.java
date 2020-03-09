@@ -14,7 +14,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent"})
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "settlementDate"})
 public class OrderReadDto {
 	private String externalIdentifier;
 	private MetaType metaType;
@@ -24,5 +24,6 @@ public class OrderReadDto {
 	private TradeIntent intent;
 	private String instrument;
 	private OrderStatus status;
+	private Instant settlementDate;
 	private Instant timestamp;
 }

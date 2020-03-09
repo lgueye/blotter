@@ -52,6 +52,7 @@ public class AvaloqStexOrderDtoToNormalizedOrderDtoProducer implements Normalize
 					.intent(order.getIntent()) //
 					.portfolio(order.getPortfolio()) //
 					.status(order.getStatus()) //
+					.settlementDate(order.getSettlementDate()) //
 					.timestamp(context.getTimestamp()) //
 					.details(objectMapper.writeValueAsString(order)).build();
 		} catch (Exception e) {

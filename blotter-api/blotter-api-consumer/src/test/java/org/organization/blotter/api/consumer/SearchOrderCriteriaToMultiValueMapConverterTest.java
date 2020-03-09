@@ -33,6 +33,8 @@ public class SearchOrderCriteriaToMultiValueMapConverterTest {
 				.intents("buy") //
 				.externalIdentifiers("any-ext-id") //
 				.statuses("validated") //
+				.price("[600,800]") //
+				.settlementDate("[2020-03-15T00:00:00.000Z,2020-03-17T00:00:00.000Z]") //
 				.build();
 
 		// When
@@ -47,6 +49,8 @@ public class SearchOrderCriteriaToMultiValueMapConverterTest {
 		expected.add("intents", String.format("{%s}", "intents"));
 		expected.add("statuses", String.format("{%s}", "statuses"));
 		expected.add("externalIdentifiers", String.format("{%s}", "externalIdentifiers"));
+		expected.add("price", String.format("{%s}", "price"));
+		expected.add("settlementDate", String.format("{%s}", "settlementDate"));
 		assertEquals(expected, actual);
 	}
 }

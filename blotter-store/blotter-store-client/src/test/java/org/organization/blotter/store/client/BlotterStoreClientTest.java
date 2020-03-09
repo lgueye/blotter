@@ -14,6 +14,7 @@ import org.organization.blotter.shared.model.OrderStatus;
 import org.organization.blotter.shared.model.TradeIntent;
 
 import javax.persistence.EntityManager;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,7 @@ public class BlotterStoreClientTest {
 		final String portfolio = "portfolio";
 		final OrderStatus status = OrderStatus.validated;
 		final Instant now = Instant.now();
+		final Instant settlementDate = now.plus(Duration.ofDays(1));
 		final NormalizedOrderDto dto = NormalizedOrderDto.builder() //
 				.price(price) //
 				.author(author) //
@@ -67,6 +69,7 @@ public class BlotterStoreClientTest {
 				.metaType(metaType) //
 				.portfolio(portfolio) //
 				.status(status) //
+				.settlementDate(settlementDate) //
 				.timestamp(now) //
 				.build();
 
@@ -89,6 +92,7 @@ public class BlotterStoreClientTest {
 		assertEquals(metaType, captured.getMetaType());
 		assertEquals(portfolio, captured.getPortfolio());
 		assertEquals(status, captured.getStatus());
+		assertEquals(settlementDate, captured.getSettlementDate());
 		assertEquals(now, captured.getTimestamp());
 	}
 
@@ -106,6 +110,7 @@ public class BlotterStoreClientTest {
 		final String portfolio = "portfolio";
 		final OrderStatus status = OrderStatus.validated;
 		final Instant now = Instant.now();
+		final Instant settlementDate = now.plus(Duration.ofDays(1));
 		final NormalizedOrderDto dto = NormalizedOrderDto.builder() //
 				.price(price) //
 				.author(author) //
@@ -117,6 +122,7 @@ public class BlotterStoreClientTest {
 				.metaType(metaType) //
 				.portfolio(portfolio) //
 				.status(status) //
+				.settlementDate(settlementDate) //
 				.timestamp(now) //
 				.build();
 
@@ -139,6 +145,7 @@ public class BlotterStoreClientTest {
 		assertEquals(metaType, captured.getMetaType());
 		assertEquals(portfolio, captured.getPortfolio());
 		assertEquals(status, captured.getStatus());
+		assertEquals(settlementDate, captured.getSettlementDate());
 		assertEquals(now, captured.getTimestamp());
 
 	}

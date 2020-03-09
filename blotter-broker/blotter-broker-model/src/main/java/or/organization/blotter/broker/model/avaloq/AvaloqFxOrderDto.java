@@ -13,8 +13,8 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@EqualsAndHashCode(of = {"portfolio", "instrument", "timestamp", "metaType", "intent"})
+@Builder(toBuilder = true)
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "settlementDate"})
 public class AvaloqFxOrderDto {
 	private String externalIdentifier;
 	private MetaType metaType = MetaType.fx;
@@ -24,5 +24,6 @@ public class AvaloqFxOrderDto {
 	private TradeIntent intent;
 	private String instrument;
 	private OrderStatus status;
+	private Instant settlementDate;
 	private Instant timestamp;
 }

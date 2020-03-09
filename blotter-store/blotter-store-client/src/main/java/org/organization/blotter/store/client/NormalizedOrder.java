@@ -23,17 +23,20 @@ import java.time.Instant;
 		@Index(name = "idx_normalized_orders_intent", columnList = "intent"),
 		@Index(name = "idx_normalized_orders_instrument", columnList = "instrument"),
 		@Index(name = "idx_normalized_orders_portfolio", columnList = "portfolio"),
-		@Index(name = "idx_normalized_orders_portfolio", columnList = "portfolio"),
 		@Index(name = "idx_normalized_orders_timestamp", columnList = "timestamp"),
-		@Index(name = "idx_normalized_orders_uniq", columnList = "portfolio, instrument, meta_type, intent, status", unique = true)})
-@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "status"})
+		@Index(name = "idx_normalized_orders_setlmt_date", columnList = "settlement_date"),
+		@Index(name = "idx_normalized_orders_uniq", columnList = "portfolio, instrument, meta_type, intent, settlement_date", unique = true)})
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "settlementDate"})
 public class NormalizedOrder {
 	@Id
 	private String id;
 
-	@Column(name = "timestamp", columnDefinition = "BIGINT", nullable = false)
+	@Column(name = "timestamp", columnDefinition = "varchar(255)", nullable = false)
 	@NotNull
 	private Instant timestamp;
+	@Column(name = "settlement_date", columnDefinition = "varchar(255)", nullable = false)
+	@NotNull
+	private Instant settlementDate;
 
 	@Column(name = "external_identifier", nullable = false)
 	@NotNull

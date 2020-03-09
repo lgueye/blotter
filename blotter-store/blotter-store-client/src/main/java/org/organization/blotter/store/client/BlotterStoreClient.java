@@ -37,6 +37,7 @@ public class BlotterStoreClient {
 				.id(UUID.randomUUID().toString()) //
 				.portfolio(dto.getPortfolio()) //
 				.status(dto.getStatus()) //
+				.settlementDate(dto.getSettlementDate()) //
 				.timestamp(dto.getTimestamp()) //
 				.build();
 		final NormalizedOrder example = NormalizedOrder.builder() //
@@ -44,7 +45,7 @@ public class BlotterStoreClient {
 				.intent(dto.getIntent()) //
 				.metaType(dto.getMetaType()) //
 				.portfolio(dto.getPortfolio()) //
-				.status(dto.getStatus()) //
+				.settlementDate(dto.getSettlementDate()) //
 				.build();
 		log.info("Looking for duplicate before saving {}", example);
 
@@ -84,6 +85,7 @@ public class BlotterStoreClient {
 						.metaType(record.getMetaType()) //
 						.portfolio(record.getPortfolio()) //
 						.status(record.getStatus()) //
+						.settlementDate(record.getSettlementDate()) //
 						.timestamp(record.getTimestamp()) //
 						.build()) //
 				.filter(Objects::nonNull) //

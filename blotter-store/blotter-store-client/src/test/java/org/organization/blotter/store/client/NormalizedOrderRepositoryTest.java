@@ -15,6 +15,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,9 +44,10 @@ public class NormalizedOrderRepositoryTest {
 	@Test
 	public void create_ok() {
 		// Given
+		Instant now = Instant.now();
 		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(UUID.randomUUID().toString()).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222")
-				.status(OrderStatus.booked).timestamp(Instant.now()).build();
+				.status(OrderStatus.booked).timestamp(now).settlementDate(now.plus(Duration.ofDays(5))).build();
 
 		// When
 		underTest.save(detached);
@@ -55,9 +57,10 @@ public class NormalizedOrderRepositoryTest {
 	public void update_ok() {
 		// Given
 		final String id = UUID.randomUUID().toString();
+		Instant now = Instant.now();
 		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(id).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222").status(OrderStatus.booked)
-				.timestamp(Instant.now()).build();
+				.timestamp(now).settlementDate(now.plus(Duration.ofDays(5))).build();
 		underTest.save(detached);
 		final Optional<NormalizedOrder> persistedOptional = underTest.findById(id);
 		assertTrue(persistedOptional.isPresent());
@@ -79,9 +82,10 @@ public class NormalizedOrderRepositoryTest {
 	public void delete_ok() {
 		// Given
 		final String id = UUID.randomUUID().toString();
+		Instant now = Instant.now();
 		final NormalizedOrder detached = NormalizedOrder.builder().price("5000").author("author").details("{}").externalIdentifier("ext-id-0000014")
 				.instrument("LU788888").id(id).intent(TradeIntent.sell).metaType(MetaType.stex).portfolio("PF-2222").status(OrderStatus.booked)
-				.timestamp(Instant.now()).build();
+				.timestamp(now).settlementDate(now.plus(Duration.ofDays(5))).build();
 		underTest.save(detached);
 		underTest.deleteById(id);
 

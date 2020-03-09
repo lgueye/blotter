@@ -1,8 +1,9 @@
 package org.organization.blotter.api.model;
 
-import lombok.*;
-
-import java.time.Instant;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author louis.gueye@gmail.com
@@ -11,7 +12,6 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"portfolios", "instruments", "timestamp", "metaTypes", "intents"})
 public class SearchOrderCriteria {
 	private String externalIdentifiers;
 	private String metaTypes;
@@ -21,5 +21,5 @@ public class SearchOrderCriteria {
 	private String intents;
 	private String instruments;
 	private String statuses;
-	private Instant timestamp;
+	private String settlementDate;
 }

@@ -14,7 +14,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "status"})
+@EqualsAndHashCode(of = {"portfolio", "instrument", "metaType", "intent", "status", "settlementDate"})
 public class NormalizedOrderDto {
 	private String id;
 	private String externalIdentifier;
@@ -26,5 +26,6 @@ public class NormalizedOrderDto {
 	private String instrument;
 	private String details;
 	private OrderStatus status;
+	private Instant settlementDate;
 	private Instant timestamp;
 }

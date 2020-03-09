@@ -12,6 +12,7 @@ import org.organization.blotter.shared.configuration.BlotterSharedSerializationC
 import org.organization.blotter.shared.model.MetaType;
 import org.organization.blotter.shared.model.TradeIntent;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,17 +78,19 @@ public class AvaloqFxOrderDtoToNormalizedOrderDtoProducerTest {
 	@Test
 	public void produce_ok() throws JsonProcessingException {
 		// Given
+		final Instant now = Instant.now();
+		final Instant settlementDate = now.plus(Duration.ofDays(1));
 		final AvaloqFxOrderDto dto = AvaloqFxOrderDto.builder().author("author").externalIdentifier("ext-int").intent(TradeIntent.buy)
-				.portfolio("pf-001").build();
+				.portfolio("pf-001").price(600f).settlementDate(settlementDate).build();
 		final ProcessingContext context = ProcessingContext.builder().message(objectMapper.writeValueAsString(dto)).source(SourceQueues.AVALOQ)
-				.timestamp(Instant.now()).build();
+				.timestamp(now).build();
 
 		// When
 		final NormalizedOrderDto actual = underTest.produce(context);
 
 		// Then
 		final NormalizedOrderDto expected = NormalizedOrderDto.builder().author("author").externalIdentifier("ext-int").metaType(MetaType.fx)
-				.intent(TradeIntent.buy).portfolio("pf-001").build();
+				.intent(TradeIntent.buy).price(600f).settlementDate(settlementDate).portfolio("pf-001").build();
 		assertEquals(expected, actual);
 	}
 }
