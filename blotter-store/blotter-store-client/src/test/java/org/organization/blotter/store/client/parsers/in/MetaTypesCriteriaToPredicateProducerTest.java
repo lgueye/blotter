@@ -33,7 +33,7 @@ public class MetaTypesCriteriaToPredicateProducerTest {
 	@Test
 	public void accept_ok() {
 		// Given
-		final SearchOrderCriteria criteria = SearchOrderCriteria.builder().metaTypes("foo").build();
+		final SearchOrderCriteria criteria = SearchOrderCriteria.builder().metaTypes(MetaType.fx.name()).build();
 
 		// When
 		final boolean actual = underTest.accept(criteria);

@@ -12,25 +12,26 @@ import java.util.regex.Pattern;
 
 public class ToFloatRangePredicateProducer implements FloatRangePredicateProducer {
 
-    private static final Pattern PATTERN = Pattern.compile("](.*?)]");
+	private static final Pattern PATTERN = Pattern.compile("](.*?)]");
 
-    @Override
-    public boolean accept(String input) {
-        final Matcher matcher = PATTERN.matcher(input);
-        boolean found = matcher.find();
-        if (!found) return false;
-        try {
-            Float.parseFloat(matcher.group(1));
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
+	@Override
+	public boolean accept(String input) {
+		final Matcher matcher = PATTERN.matcher(input);
+		boolean found = matcher.find();
+		if (!found)
+			return false;
+		try {
+			Float.parseFloat(matcher.group(1));
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
 
-    @Override
-    public List<Predicate> produce(String input, final Root<NormalizedOrder> from, final String path, final CriteriaBuilder criteriaBuilder) {
-        final Matcher matcher = PATTERN.matcher(input);
-        final float value = Float.parseFloat(matcher.group(1));
-        return Lists.newArrayList(criteriaBuilder.equal(from.get(path), value));
-    }
+	@Override
+	public List<Predicate> produce(String input, final Root<NormalizedOrder> from, final String path, final CriteriaBuilder criteriaBuilder) {
+		final Matcher matcher = PATTERN.matcher(input);
+		final float value = Float.parseFloat(matcher.group(1));
+		return Lists.newArrayList(criteriaBuilder.equal(from.get(path), value));
+	}
 }

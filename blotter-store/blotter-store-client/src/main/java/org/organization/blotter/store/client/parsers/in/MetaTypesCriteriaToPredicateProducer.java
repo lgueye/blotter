@@ -27,9 +27,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MetaTypesCriteriaToPredicateProducer implements CriterionToPredicateProducer {
 
-    @Override
-    public boolean accept(SearchOrderCriteria criteria) {
-        return criteria != null && !Strings.isNullOrEmpty(criteria.getMetaTypes()) && Lists.newArrayList(Splitter.on(',').split(criteria.getMetaTypes())).stream() //
+	@Override
+	public boolean accept(SearchOrderCriteria criteria) {
+		return criteria != null && !Strings.isNullOrEmpty(criteria.getMetaTypes())
+				&& Lists.newArrayList(Splitter.on(',').split(criteria.getMetaTypes())).stream() //
+						.map(token -> {
+							try {
+								return MetaType.valueOf(token);
+							} catch (Exception e) {
+								return null;
+							}
+						}) //
+						.filter(Objects::nonNull).count() > 0;
+	}
+
+	@Override
+	public List<Predicate> produce(final SearchOrderCriteria criteria, final Root<NormalizedOrder> from, final CriteriaBuilder criteriaBuilder) {
+		final List<MetaType> metaTypes = Lists.newArrayList(Splitter.on(',').split(criteria.getMetaTypes())).stream() //
 				.map(token -> {
 					try {
 						return MetaType.valueOf(token);
@@ -37,23 +51,10 @@ public class MetaTypesCriteriaToPredicateProducer implements CriterionToPredicat
 						return null;
 					}
 				}) //
-				.filter(Objects::nonNull).count() > 0;
-    }
-
-    @Override
-    public List<Predicate> produce(final SearchOrderCriteria criteria, final Root<NormalizedOrder> from, final CriteriaBuilder criteriaBuilder) {
-        final List<MetaType> metaTypes = Lists.newArrayList(Splitter.on(',').split(criteria.getMetaTypes())).stream() //
-                .map(token -> {
-                    try {
-                        return MetaType.valueOf(token);
-                    } catch (Exception e) {
-                        return null;
-                    }
-                }) //
-                .filter(Objects::nonNull) //
-                .collect(Collectors.toList());
-        // this must match a property in the NormalizedOrder
-        return Lists.newArrayList(from.get("metaType").in(metaTypes));
-    }
+				.filter(Objects::nonNull) //
+				.collect(Collectors.toList());
+		// this must match a property in the NormalizedOrder
+		return Lists.newArrayList(from.get("metaType").in(metaTypes));
+	}
 
 }

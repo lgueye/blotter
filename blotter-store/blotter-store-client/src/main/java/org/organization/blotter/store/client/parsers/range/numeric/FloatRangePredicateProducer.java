@@ -8,6 +8,6 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public interface FloatRangePredicateProducer {
-    boolean accept(String input);
-    List<Predicate> produce(String input, final Root<NormalizedOrder> from, final String path, final CriteriaBuilder criteriaBuilder);
+	boolean accept(String input);
+	List<Predicate> produce(String input, final Root<NormalizedOrder> from, final String path, final CriteriaBuilder criteriaBuilder);
 }

@@ -30,10 +30,8 @@ public class PriceCriteriaToPredicateProducer implements CriterionToPredicatePro
 	@Override
 	public List<Predicate> produce(final SearchOrderCriteria criteria, final Root<NormalizedOrder> from, final CriteriaBuilder criteriaBuilder) {
 		final String priceCriteria = criteria.getPrice();
-		return rangePredicateProducers.stream()
-				.filter(producer -> producer.accept(priceCriteria))
-				.map(producer -> producer.produce(priceCriteria, from, "price", criteriaBuilder))
-				.flatMap(Collection::stream)
+		return rangePredicateProducers.stream().filter(producer -> producer.accept(priceCriteria))
+				.map(producer -> producer.produce(priceCriteria, from, "price", criteriaBuilder)).flatMap(Collection::stream)
 				.collect(Collectors.toList());
 	}
 
