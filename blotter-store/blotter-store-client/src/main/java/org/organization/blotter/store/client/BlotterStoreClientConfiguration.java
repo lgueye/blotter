@@ -1,5 +1,8 @@
 package org.organization.blotter.store.client;
 
+import org.organization.blotter.store.client.parsers.CriterionToPredicateProducer;
+import org.organization.blotter.store.client.parsers.in.MetaTypesCriteriaToPredicateProducer;
+import org.organization.blotter.store.client.parsers.in.PortfoliosCriteriaToPredicateProducer;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;

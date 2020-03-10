@@ -1,7 +1,8 @@
-package org.organization.blotter.store.client;
+package org.organization.blotter.store.client.parsers.range.numeric;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.organization.blotter.store.client.parsers.range.numeric.ExactFloatRangePredicateProducer;
 
 import static org.junit.jupiter.api.Assertions.*;
 

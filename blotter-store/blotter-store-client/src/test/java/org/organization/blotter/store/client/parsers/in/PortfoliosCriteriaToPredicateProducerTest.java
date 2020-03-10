@@ -1,17 +1,17 @@
-package org.organization.blotter.store.client;
+package org.organization.blotter.store.client.parsers.in;
 
 import com.google.common.base.Joiner;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.organization.blotter.api.model.SearchOrderCriteria;
-import org.organization.blotter.shared.model.MetaType;
+import org.organization.blotter.store.client.NormalizedOrder;
+import org.organization.blotter.store.client.parsers.in.PortfoliosCriteriaToPredicateProducer;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,18 +20,18 @@ import static org.mockito.Mockito.*;
 /**
  * @author louis.gueye@gmail.com
  */
-public class MetaTypesCriteriaToPredicateProducerTest {
-	private MetaTypesCriteriaToPredicateProducer underTest;
+public class PortfoliosCriteriaToPredicateProducerTest {
+	private PortfoliosCriteriaToPredicateProducer underTest;
 
 	@Before
 	public void before() {
-		underTest = new MetaTypesCriteriaToPredicateProducer();
+		underTest = new PortfoliosCriteriaToPredicateProducer();
 	}
 
 	@Test
 	public void accept_ok() {
 		// Given
-		final SearchOrderCriteria criteria = SearchOrderCriteria.builder().metaTypes("foo").build();
+		final SearchOrderCriteria criteria = SearchOrderCriteria.builder().portfolios("foo").build();
 
 		// When
 		final boolean actual = underTest.accept(criteria);
@@ -52,7 +52,7 @@ public class MetaTypesCriteriaToPredicateProducerTest {
 		assertFalse(actual);
 
 		// Given
-		criteria = SearchOrderCriteria.builder().portfolios("foo").instruments("bar").build();
+		criteria = SearchOrderCriteria.builder().metaTypes("foo").instruments("bar").build();
 
 		// When
 		actual = underTest.accept(criteria);
@@ -64,19 +64,19 @@ public class MetaTypesCriteriaToPredicateProducerTest {
 	@Test
 	public void produce_ok() {
 		// Given
-		final List<MetaType> metaTypes = Lists.newArrayList(MetaType.stex, MetaType.fx);
+		final List<String> portfolios = Lists.newArrayList("pf-001", "pf-002");
 		final SearchOrderCriteria criteria = SearchOrderCriteria.builder() //
-				.metaTypes(Joiner.on(',').join(metaTypes.stream().map(Enum::name).collect(Collectors.toList()))) //
+				.portfolios(Joiner.on(',').join(portfolios)) //
 				.build();
 		final Root<NormalizedOrder> from = mock(Root.class);
 		final Path path = mock(Path.class);
-		when(from.get("metaType")).thenReturn(path);
+		when(from.get("portfolio")).thenReturn(path);
 
 		// When
-		underTest.produce(criteria, from);
+		underTest.produce(criteria, from, mock(CriteriaBuilder.class));
 
 		// Then
-		verify(path).in(metaTypes);
+		verify(path).in(portfolios);
 	}
 
 }

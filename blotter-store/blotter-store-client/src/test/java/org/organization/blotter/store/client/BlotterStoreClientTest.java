@@ -12,6 +12,9 @@ import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.shared.model.MetaType;
 import org.organization.blotter.shared.model.OrderStatus;
 import org.organization.blotter.shared.model.TradeIntent;
+import org.organization.blotter.store.client.parsers.CriterionToPredicateProducer;
+import org.organization.blotter.store.client.parsers.in.MetaTypesCriteriaToPredicateProducer;
+import org.organization.blotter.store.client.parsers.in.PortfoliosCriteriaToPredicateProducer;
 
 import javax.persistence.EntityManager;
 import java.time.Duration;

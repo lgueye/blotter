@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.organization.blotter.api.model.NormalizedOrderDto;
 import org.organization.blotter.api.model.OrderReadDto;
 import org.organization.blotter.api.model.SearchOrderCriteria;
+import org.organization.blotter.store.client.parsers.CriterionToPredicateProducer;
 import org.springframework.data.domain.Example;
 
 import javax.persistence.EntityManager;
@@ -70,7 +71,7 @@ public class BlotterStoreClient {
 		final Root<NormalizedOrder> from = query.from(NormalizedOrder.class);
 		final List<Predicate> predicates = predicateProducers.stream() //
 				.filter(producer -> producer.accept(criteria)) //
-				.map(producer -> producer.produce(criteria, from)) //
+				.map(producer -> producer.produce(criteria, from, criteriaBuilder)) //
 				.flatMap(Collection::stream) //
 				.collect(Collectors.toList());
 		final CriteriaQuery<NormalizedOrder> fullQuery = query.select(from).where(predicates.toArray(new Predicate[]{}));
