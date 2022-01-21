@@ -30,7 +30,7 @@
         <geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
         <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
         <guava.version>27.0.1-jre</guava.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
         <hibernate.version>5.4.9.Final</hibernate.version>
         <hibernate5-ddl-maven-plugin.version>2.2.0</hibernate5-ddl-maven-plugin.version>
