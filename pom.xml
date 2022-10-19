@@ -35,7 +35,7 @@
         <hibernate.version>5.4.9.Final</hibernate.version>
         <hibernate5-ddl-maven-plugin.version>2.2.0</hibernate5-ddl-maven-plugin.version>
         <httpclient.version>4.4</httpclient.version>
-        <jackson.version>2.12.1</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
         <java.version>${maven.compiler.source}</java.version>
         <javax.el-api.version>3.0.1-b06</javax.el-api.version>
